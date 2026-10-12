@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unternehmen als vernetzte Systeme · Wirtschaftsinformatik Klasse 10</title>
+<meta name="description" content="Interaktives Lernmodul: Aufbauorganisation, Auftragsabwicklung, Ereignisgesteuerte Prozesskette (EPK), Kommissionierung, Versand und IT-Unterstützung.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0F2130;
+  --ink-2:#1B3648;
+  --paper:#F1F3F2;
+  --card:#FFFFFF;
+  --line:#CAD4D8;
+  --line-soft:#E2E8EA;
+  --text:#152430;
+  --muted:#56676F;
+  --signal:#E29A18;
+  --signal-soft:#FBEFD5;
+  --teal:#0E6C77;
+  --teal-soft:#DCEDEF;
+  --rose:#C0475F;
+  --rose-soft:#F8E3E7;
+  --green:#2C8A61;
+  --green-soft:#DEF0E7;
+  --amber:#D9A62B;
+  --amber-soft:#FBF0D3;
+  --shadow:0 1px 0 rgba(15,33,48,.08);
+  --r:10px;
+  --font-h:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --font-b:"IBM Plex Sans","Segoe UI",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{
+  margin:0;background:var(--paper);color:var(--text);
+  font-family:var(--font-b);font-size:17px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+img,svg{max-width:100%}
+h1,h2,h3,h4{font-family:var(--font-h);line-height:1.12;margin:0;letter-spacing:-.015em}
+h2{font-size:clamp(28px,4vw,42px);font-weight:800}
+h3{font-size:clamp(20px,2.4vw,26px);font-weight:700;margin-top:34px;margin-bottom:10px}
+h4{font-size:18px;font-weight:700;margin-bottom:6px}
+p{margin:0 0 16px}
+a{color:var(--teal)}
+strong{font-weight:600}
+:focus-visible{outline:3px solid var(--signal);outline-offset:2px;border-radius:4px}
+
+/* ---------- Kopfbereich ---------- */
+.hero{
+  position:relative;background:var(--ink);color:#EAF0F2;overflow:hidden;
+  padding:72px 24px 0;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(135deg,rgba(226,154,24,.10) 0 14px,transparent 14px 44px);
+  pointer-events:none;
+}
+.hero-inner{position:relative;max-width:1180px;margin:0 auto}
+.hero h1{
+  font-size:clamp(38px,7vw,82px);font-weight:800;letter-spacing:-.03em;max-width:14ch;
+  margin-bottom:20px;
+}
+.hero h1 em{font-style:normal;display:block;color:var(--signal)}
+.hero-lead{font-size:clamp(17px,2vw,21px);max-width:56ch;color:#B9C8CE;margin-bottom:8px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 0}
+.hero-meta span{
+  border:1px solid rgba(234,240,242,.28);border-radius:100px;padding:5px 14px;
+  font-size:14px;color:#CFDCE1;
+}
+/* Auftragsreise im Kopfbereich */
+.journey{margin:46px 0 0;padding:26px 0 54px;border-top:1px solid rgba(234,240,242,.15)}
+.journey-title{font-size:14px;color:#8FA6AF;margin-bottom:18px}
+.track{position:relative;display:flex;gap:0;align-items:stretch;flex-wrap:wrap}
+.stop{
+  flex:1 1 150px;min-width:140px;border-left:2px solid rgba(234,240,242,.2);
+  padding:14px 14px 16px;position:relative;
+}
+.stop:first-child{border-left-color:var(--signal)}
+.stop b{display:block;font-family:var(--font-h);font-size:17px;font-weight:700;color:#fff}
+.stop span{font-size:14px;color:#96AAB2}
+.stop::after{
+  content:"";position:absolute;top:-6px;left:-6px;width:10px;height:10px;border-radius:50%;
+  background:var(--signal);opacity:.25;
+}
+.token{
+  position:absolute;top:-9px;left:0;width:16px;height:16px;border-radius:50%;
+  background:var(--signal);box-shadow:0 0 0 6px rgba(226,154,24,.22);
+  animation:travel 9s cubic-bezier(.7,0,.3,1) infinite;
+}
+@keyframes travel{
+  0%,8%{left:0%}
+  22%,30%{left:25%}
+  44%,52%{left:50%}
+  66%,74%{left:75%}
+  88%,100%{left:calc(100% - 16px)}
+}
+@media (prefers-reduced-motion:reduce){.token{animation:none;left:0}}
+
+/* ---------- Navigation ---------- */
+.nav{
+  position:sticky;top:0;z-index:60;background:rgba(241,243,242,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+}
+.nav-bar{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:8px;padding:0 16px;overflow-x:auto}
+.nav a{
+  flex:0 0 auto;padding:14px 12px;font-size:15px;color:var(--muted);text-decoration:none;
+  border-bottom:3px solid transparent;white-space:nowrap;
+}
+.nav a:hover{color:var(--text)}
+.nav a.active{color:var(--ink);border-bottom-color:var(--signal);font-weight:600}
+.progress{height:3px;background:var(--signal);width:0;transition:width .15s linear}
+
+/* ---------- Layout ---------- */
+main{max-width:1180px;margin:0 auto;padding:0 24px 90px}
+section{padding:64px 0 8px;border-top:1px solid var(--line-soft)}
+section:first-of-type{border-top:0}
+.kapitel{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+.kapitel i{
+  font-style:normal;font-family:var(--font-h);font-weight:800;font-size:15px;
+  color:var(--signal);border:2px solid var(--signal);border-radius:6px;padding:2px 9px;
+}
+.intro{font-size:19px;color:var(--muted);max-width:68ch;margin:14px 0 26px}
+.prose{max-width:72ch}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+
+/* ---------- Bausteine ---------- */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.tool{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:24px 0}
+.tool-head{
+  display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;
+  padding:14px 20px;border-bottom:1px solid var(--line-soft);background:#FAFBFB;
+}
+.tool-head h4{margin:0;font-size:17px}
+.tool-head p{margin:0;font-size:14px;color:var(--muted)}
+.tool-body{padding:22px 20px}
+.hint{font-size:14px;color:var(--muted);margin-top:12px}
+.btn{
+  font-family:var(--font-b);font-size:15px;font-weight:500;cursor:pointer;
+  background:var(--ink);color:#fff;border:1px solid var(--ink);border-radius:8px;padding:9px 16px;
+}
+.btn:hover{background:var(--ink-2)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{background:#EDF1F2}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  font-family:var(--font-b);font-size:14px;cursor:pointer;background:#fff;color:var(--muted);
+  border:1px solid var(--line);border-radius:100px;padding:7px 15px;
+}
+.chip:hover{color:var(--text);border-color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.note{
+  border-left:4px solid var(--signal);background:var(--signal-soft);
+  padding:14px 18px;border-radius:0 8px 8px 0;margin:20px 0;
+}
+.note b{font-family:var(--font-h)}
+table{width:100%;border-collapse:collapse;font-size:15.5px;margin:14px 0}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--font-h);font-size:14px;color:var(--muted);font-weight:600}
+tbody tr:hover{background:#FAFBFB}
+ul.clean{list-style:none;padding:0;margin:0}
+ul.clean li{padding:9px 0 9px 26px;position:relative;border-bottom:1px dashed var(--line-soft)}
+ul.clean li::before{content:"";position:absolute;left:4px;top:18px;width:8px;height:8px;background:var(--signal);border-radius:2px}
+
+/* ---------- Organigramm ---------- */
+.org{overflow-x:auto;padding:8px 2px 4px}
+.org-inner{display:block}
+.org-top{display:flex;justify-content:center}
+.box{
+  border:1px solid var(--line);border-radius:7px;padding:9px 13px;background:#fff;
+  font-size:14.5px;text-align:center;min-width:118px;
+}
+.box.lead{background:var(--rose-soft);border-color:#E6BCC5;font-weight:600;font-family:var(--font-h)}
+.box.unit{background:var(--amber-soft);border-color:#E9D49A;font-weight:600;font-family:var(--font-h);width:100%}
+.box.sub{background:#E7EEF1;border-color:#CBDBE1;width:100%}
+.box.staff{background:#EDEAF4;border-color:#D2CBE4;width:100%}
+button.box{cursor:pointer;font-family:var(--font-b);display:block}
+button.box.unit,button.box.lead{font-family:var(--font-h)}
+button.box:hover{border-color:var(--ink);box-shadow:0 0 0 2px rgba(15,33,48,.08)}
+button.box.sel{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-soft)}
+.rail{height:26px;position:relative;margin:0 auto;width:100%}
+.rail::before{content:"";position:absolute;top:0;left:50%;width:2px;height:13px;background:var(--line)}
+.org-cols{display:flex;gap:14px;min-width:min-content;align-items:flex-start;justify-content:center}
+.org-col{flex:1 1 0;min-width:150px;display:flex;flex-direction:column;gap:9px;position:relative;padding-top:14px}
+.org-col::before{content:"";position:absolute;top:0;left:50%;width:2px;height:14px;background:var(--line)}
+.crossbar{height:2px;background:var(--line);margin:0 auto;position:relative}
+.subs{display:flex;flex-direction:column;gap:8px;padding-left:16px;position:relative}
+.subs::before{content:"";position:absolute;left:6px;top:-6px;bottom:16px;width:2px;background:var(--line)}
+.subs > *{position:relative}
+.subs > *::before{content:"";position:absolute;left:-10px;top:50%;width:10px;height:2px;background:var(--line)}
+.orgpick{margin-bottom:14px}
+.orgsource{font-size:13.5px;color:var(--muted);margin-top:12px}
+.detail{
+  margin-top:16px;border:1px dashed var(--line);border-radius:8px;padding:16px 18px;background:#FAFBFB;
+  min-height:92px;
+}
+.detail h5{margin:0 0 6px;font-family:var(--font-h);font-size:17px}
+.detail p{margin:0;font-size:15.5px;color:var(--muted)}
+
+/* ---------- Stepper Auftragsabwicklung ---------- */
+.steps-rail{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.steps-rail button{
+  flex:1 1 110px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 8px;
+  font-family:var(--font-b);font-size:14px;cursor:pointer;color:var(--muted);text-align:left;line-height:1.3;
+}
+.steps-rail button b{display:block;font-family:var(--font-h);font-size:15px;color:var(--text)}
+.steps-rail button[aria-current="true"]{border-color:var(--ink);background:var(--ink);color:#C9D8DE}
+.steps-rail button[aria-current="true"] b{color:#fff}
+.stage{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:start}
+@media (max-width:760px){.stage{grid-template-columns:1fr}}
+.stage-vis{background:#FAFBFB;border:1px solid var(--line-soft);border-radius:8px;padding:18px}
+.kv{display:flex;gap:10px;font-size:15px;padding:8px 0;border-bottom:1px dashed var(--line-soft)}
+.kv b{font-family:var(--font-h);min-width:110px;font-weight:600}
+.navrow{display:flex;gap:10px;margin-top:18px}
+
+/* ---------- EPK ---------- */
+.epk{display:flex;flex-direction:column;align-items:center;gap:0;padding:6px 0}
+.epk-row{display:flex;align-items:center;gap:14px;justify-content:center;width:100%}
+.ev,.fn{
+  border:2px solid;padding:12px 22px;font-size:15px;text-align:center;cursor:pointer;
+  font-family:var(--font-b);max-width:330px;
+}
+.ev{
+  background:var(--rose-soft);border-color:var(--rose);color:#6E2233;
+  clip-path:polygon(14px 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,14px 100%,0 50%);
+  padding:12px 30px;border:0;box-shadow:none;background-image:none;
+}
+.ev{border:0;background:var(--rose-soft);outline:0}
+.fn{background:var(--green-soft);border-color:var(--green);color:#1C5C40;border-radius:12px}
+.org-unit{
+  background:var(--amber-soft);border:2px solid var(--amber);color:#6B5210;border-radius:100px;
+  padding:8px 18px;font-size:14px;cursor:pointer;font-family:var(--font-b);
+}
+.conn{
+  width:44px;height:44px;border:2px solid var(--teal);border-radius:50%;background:var(--teal-soft);
+  color:#0B4E56;font-family:var(--font-h);font-weight:700;font-size:13px;display:grid;place-items:center;
+}
+.arrow{width:2px;height:26px;background:var(--ink-2);position:relative;margin:0 auto}
+.arrow::after{
+  content:"";position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);
+  border:6px solid transparent;border-top-color:var(--ink-2);
+}
+.epk-branch{display:flex;gap:26px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
+.epk-branch > div{display:flex;flex-direction:column;align-items:center}
+.legend{display:flex;flex-wrap:wrap;gap:18px;font-size:14.5px;color:var(--muted);margin-top:20px}
+.legend span{display:flex;align-items:center;gap:8px}
+.swatch{width:22px;height:16px;border:2px solid}
+.sw-ev{background:var(--rose-soft);border-color:var(--rose);clip-path:polygon(6px 0,calc(100% - 6px) 0,100% 50%,calc(100% - 6px) 100%,6px 100%,0 50%)}
+.sw-fn{background:var(--green-soft);border-color:var(--green);border-radius:5px}
+.sw-og{background:var(--amber-soft);border-color:var(--amber);border-radius:100px}
+.selected-el{box-shadow:0 0 0 4px rgba(14,108,119,.22)}
+
+/* ---------- Sortier-Übung ---------- */
+.sorter{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:700px){.sorter{grid-template-columns:1fr}}
+.pool,.slots{border:1px dashed var(--line);border-radius:8px;padding:14px;min-height:200px;background:#FAFBFB}
+.pool h5,.slots h5{margin:0 0 10px;font-family:var(--font-h);font-size:15px;color:var(--muted)}
+.tile{
+  display:block;width:100%;text-align:left;margin-bottom:8px;cursor:pointer;font-family:var(--font-b);
+  font-size:15px;padding:10px 14px;border:2px solid var(--line);background:#fff;border-radius:8px;
+}
+.tile.t-ev{background:var(--rose-soft);border-color:var(--rose)}
+.tile.t-fn{background:var(--green-soft);border-color:var(--green)}
+.tile:hover{transform:translateX(2px)}
+.slot{
+  border:2px dashed var(--line);border-radius:8px;padding:10px 14px;margin-bottom:8px;
+  font-size:15px;color:var(--muted);min-height:44px;
+}
+.slot.filled{border-style:solid}
+.slot.ok{border-color:var(--green);background:var(--green-soft)}
+.slot.bad{border-color:var(--rose);background:var(--rose-soft)}
+.feedback{margin-top:14px;font-size:15px;padding:12px 16px;border-radius:8px;display:none}
+.feedback.show{display:block}
+.feedback.good{background:var(--green-soft);color:#1C5C40}
+.feedback.bad{background:var(--rose-soft);color:#7A2C3E}
+
+/* ---------- Swimlanes ---------- */
+.lanes{overflow-x:auto}
+.lane{display:grid;grid-template-columns:150px repeat(5,minmax(140px,1fr));border-top:1px solid var(--line-soft)}
+.lane:last-child{border-bottom:1px solid var(--line-soft)}
+.lane-name{
+  background:var(--amber-soft);border-right:2px solid var(--amber);padding:16px 12px;
+  font-family:var(--font-h);font-weight:600;font-size:15px;display:flex;align-items:center;
+}
+.cell{padding:14px 10px;border-right:1px dashed var(--line-soft);display:flex;align-items:center}
+.lane-fn{
+  background:var(--green-soft);border:2px solid var(--green);border-radius:10px;padding:8px 12px;
+  font-size:14px;color:#1C5C40;width:100%;text-align:center;
+}
+.cut{background:linear-gradient(90deg,transparent,rgba(192,71,95,.14));position:relative}
+.cut::after{
+  content:"Schnittstelle";position:absolute;left:2px;top:4px;font-size:11px;color:var(--rose);
+  font-weight:600;letter-spacing:.02em;
+}
+.hide-cut .cut{background:none}
+.hide-cut .cut::after{display:none}
+
+/* ---------- Kommissionierung ---------- */
+.pick{display:grid;grid-template-columns:1.15fr .85fr;gap:22px}
+@media (max-width:820px){.pick{grid-template-columns:1fr}}
+.picklist{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+.picklist header{background:var(--ink);color:#fff;padding:10px 14px;font-family:var(--font-h);font-size:15px}
+.picklist ol{margin:0;padding:0;list-style:none}
+.picklist li{display:flex;gap:12px;align-items:center;padding:11px 14px;border-bottom:1px solid var(--line-soft);font-size:15px}
+.picklist li.done{background:var(--green-soft);color:#1C5C40;text-decoration:line-through}
+.picklist .qty{margin-left:auto;font-family:var(--font-h);font-weight:700}
+.dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--line);flex:0 0 auto}
+.picklist li.done .dot{background:var(--green);border-color:var(--green)}
+.itcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.itcard h4{display:flex;gap:10px;align-items:center}
+.itcard .tag{font-size:12.5px;color:var(--teal);background:var(--teal-soft);border-radius:4px;padding:2px 8px;font-weight:600}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+@media (max-width:700px){.compare{grid-template-columns:1fr}}
+.compare > div{padding:20px}
+.compare .without{background:#FAF7F7;border-right:1px solid var(--line)}
+.compare .with{background:var(--teal-soft)}
+.metric{font-family:var(--font-h);font-size:30px;font-weight:800;line-height:1}
+.metric small{display:block;font-size:13px;font-weight:400;color:var(--muted);font-family:var(--font-b);margin-top:4px}
+
+/* ---------- Quiz ---------- */
+.q{border:1px solid var(--line);border-radius:var(--r);background:#fff;padding:20px;margin-bottom:14px}
+.q p.frage{font-family:var(--font-h);font-weight:700;font-size:17px;margin:0 0 14px}
+.opt{
+  display:block;width:100%;text-align:left;background:#FAFBFB;border:1px solid var(--line);
+  border-radius:8px;padding:11px 14px;margin-bottom:8px;cursor:pointer;font-family:var(--font-b);font-size:15.5px;
+}
+.opt:hover{border-color:var(--muted)}
+.opt.right{background:var(--green-soft);border-color:var(--green)}
+.opt.wrong{background:var(--rose-soft);border-color:var(--rose)}
+.expl{font-size:15px;color:var(--muted);margin-top:10px;display:none}
+.expl.show{display:block}
+.score{
+  position:sticky;bottom:16px;background:var(--ink);color:#fff;border-radius:10px;padding:14px 20px;
+  display:flex;justify-content:space-between;align-items:center;gap:14px;font-size:15px;
+}
+.score b{font-family:var(--font-h);font-size:20px}
+
+/* ---------- Glossar ---------- */
+details.gl{border-bottom:1px solid var(--line-soft);padding:4px 0}
+details.gl summary{
+  cursor:pointer;padding:12px 4px;font-family:var(--font-h);font-weight:600;font-size:16.5px;list-style:none;
+  display:flex;justify-content:space-between;align-items:center;
+}
+details.gl summary::-webkit-details-marker{display:none}
+details.gl summary::after{content:"+";color:var(--signal);font-size:22px}
+details.gl[open] summary::after{content:"–"}
+details.gl p{padding:0 4px 14px;margin:0;color:var(--muted);font-size:15.5px;max-width:70ch}
+
+footer{background:var(--ink);color:#93A8B1;padding:40px 24px;font-size:14.5px}
+footer div{max-width:1180px;margin:0 auto}
+footer b{color:#fff;font-family:var(--font-h)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <h1>Ein Auftrag reist durch das ganze Unternehmen<em>und verbindet dabei alle Abteilungen.</em></h1>
+    <p class="hero-lead">Wer ist wofür zuständig – und wann passiert was? Dieses Lernmodul führt vom Organigramm über die Auftragsabwicklung und die Ereignisgesteuerte Prozesskette bis zu Kommissionierung, Versand und der IT, die alles zusammenhält.</p>
+    <div class="hero-meta">
+      <span>Wirtschaftsinformatik</span>
+      <span>Jahrgangsstufe 10 · Gymnasium</span>
+      <span>6 Kapitel, 9 interaktive Übungen</span>
+      <span>Bearbeitungszeit ca. 60 Minuten</span>
+    </div>
+    <div class="journey">
+      <p class="journey-title">Beispiel: eine Kundenbestellung über 12 Kartuschen Dichtmasse</p>
+      <div class="track">
+        <div class="token" aria-hidden="true"></div>
+        <div class="stop"><b>Vertrieb</b><span>nimmt an, prüft Verfügbarkeit</span></div>
+        <div class="stop"><b>Lager</b><span>kommissioniert die Ware</span></div>
+        <div class="stop"><b>Versand</b><span>verpackt und verschickt</span></div>
+        <div class="stop"><b>Buchhaltung</b><span>stellt die Rechnung</span></div>
+        <div class="stop"><b>Kunde</b><span>erhält Lieferung und Beleg</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Kapitel">
+  <div class="nav-bar">
+    <a href="#aufbau">1 Aufbauorganisation</a>
+    <a href="#auftrag">2 Auftragsabwicklung</a>
+    <a href="#epk">3 EPK analysieren</a>
+    <a href="#darstellung">4 Prozesse darstellen</a>
+    <a href="#lager">5 Kommissionierung &amp; Versand</a>
+    <a href="#it">6 IT-Unterstützung</a>
+    <a href="#quiz">Test</a>
+    <a href="#material">Fragenkatalog</a>
+    <a href="#glossar">Glossar</a>
+  </div>
+  <div class="progress" id="progress"></div>
+</nav>
+
+<main>
+
+<!-- ============ 1 ============ -->
+<section id="aufbau">
+  <div class="kapitel"><i>1</i><h2>Wie ein Unternehmen aufgebaut ist</h2></div>
+  <p class="intro">2020 gab es in Deutschland rund 3,02 Millionen Unternehmen – vom Fleischproduzenten bis zum Logistikkonzern. Trotz dieser Vielfalt findet man fast überall dieselben Bausteine wieder.</p>
+
+  <div class="prose">
+    <p>Auf ein Unternehmen schaut man aus zwei Richtungen. Die <strong>Aufbauorganisation</strong> beantwortet die Frage „Wer ist wofür zuständig?“ – sie ist der statische Bauplan. Die <strong>Ablauforganisation</strong> beantwortet „Wann läuft was in welcher Reihenfolge ab?“ – das sind die Prozesse. Beides gehört zusammen: Die Aufbauorganisation liefert die Kästen, die Ablauforganisation die Pfeile dazwischen.</p>
+  </div>
+
+  <div class="grid3" style="margin:24px 0">
+    <div class="panel">
+      <h4>Stelle</h4>
+      <p style="margin:0;color:var(--muted);font-size:15.5px">Die kleinste Einheit der Aufbauorganisation: der Aufgabenbereich einer Person, zum Beispiel „Sachbearbeiter Einkauf“. Stellen werden nach Aufgaben gebildet, nicht nach Personen.</p>
+    </div>
+    <div class="panel">
+      <h4>Abteilung</h4>
+      <p style="margin:0;color:var(--muted);font-size:15.5px">Mehrere Stellen mit verwandten Aufgaben werden zu einer Abteilung zusammengefasst, etwa alle Stellen rund um Beschaffung und Kühllager zum Bereich Einkauf.</p>
+    </div>
+    <div class="panel">
+      <h4>Instanz</h4>
+      <p style="margin:0;color:var(--muted);font-size:15.5px">Eine Stelle mit Weisungsbefugnis, also Leitungsfunktion: Abteilungsleiterin, Bereichsleiter, Geschäftsführung. Instanzen dürfen Anweisungen an untergeordnete Stellen geben.</p>
+    </div>
+  </div>
+
+  <h3>Das Organigramm als Landkarte</h3>
+  <div class="prose">
+    <p>Dargestellt wird die Aufbauorganisation im <strong>Organigramm</strong>. Es zeigt Struktur, Aufgabenverteilung und Hierarchie und verschafft wie eine Landkarte Übersicht und Orientierung. Die durchgezogenen Linien sind die <strong>Weisungswege</strong>: Sie zeigen, wer wem unterstellt ist.</p>
+  </div>
+
+  <div class="tool">
+    <div class="tool-head">
+      <div><h4>Vier echte Unternehmen im Vergleich</h4><p>Wähle ein Unternehmen und klicke auf einen Kasten, um die Aufgaben der Einheit zu sehen.</p></div>
+    </div>
+    <div class="tool-body">
+      <div class="chips orgpick" id="orgpick" role="group" aria-label="Unternehmen auswählen"></div>
+      <div class="org" id="orgchart"></div>
+      <div class="detail" id="orgdetail" aria-live="polite">
+        <h5>Kasten anklicken</h5>
+        <p>Jeder Kasten ist eine organisatorische Einheit. Wähle einen aus, um zu erfahren, welche Aufgaben dort erledigt werden und welche Rolle die Einheit im Prozess spielt.</p>
+      </div>
+      <p class="orgsource" id="orgsource"></p>
+    </div>
+  </div>
+
+  <h3>Einlinien-, Mehrlinien- und Stab-Linien-System</h3>
+  <div class="prose">
+    <p>Wie viele Vorgesetzte hat eine Stelle? An dieser Frage unterscheiden sich die drei Grundformen der Leitungsorganisation. Vergleiche sie hier direkt:</p>
+  </div>
+
+  <div class="tool">
+    <div class="tool-head">
+      <div><h4>Leitungssysteme vergleichen</h4><p>Achte darauf, wie viele Linien bei einer Stelle ankommen.</p></div>
+      <div class="chips" id="linepick" role="group" aria-label="Leitungssystem auswählen">
+        <button class="chip" data-line="ein" aria-pressed="true">Einliniensystem</button>
+        <button class="chip" data-line="mehr" aria-pressed="false">Mehrliniensystem</button>
+        <button class="chip" data-line="stab" aria-pressed="false">Stab-Linien-System</button>
+      </div>
+    </div>
+    <div class="tool-body">
+      <div id="linevis"></div>
+      <div class="detail" id="linedetail" style="margin-top:18px"></div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Merksatz:</b> Jede Abteilung, die im Organigramm steht, taucht später im Prozess wieder auf – nämlich als Organisationseinheit in der EPK oder als Bahn im Swimlane-Diagramm. Das Organigramm ist damit das Vokabelheft für alle folgenden Kapitel.
+  </div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section id="auftrag">
+  <div class="kapitel"><i>2</i><h2>Wie ein Auftrag abgearbeitet wird</h2></div>
+  <p class="intro">Ein Kundenauftrag bleibt nie in einer Abteilung. Er wandert – und genau dieses Wandern macht aus einzelnen Kästen ein vernetztes System.</p>
+
+  <div class="prose">
+    <p>Der Vertrieb nimmt den Auftrag an und prüft die Verfügbarkeit, das Lager stellt die Ware zusammen, die Versandabteilung verpackt und verschickt, die Buchhaltung stellt die Rechnung. Bei jeder Übergabe wechselt die Verantwortung – und es entstehen Daten, mit denen die nächste Abteilung weiterarbeitet.</p>
+  </div>
+
+  <div class="tool">
+    <div class="tool-head">
+      <div><h4>Auftrag Nr. 2026-4711 durch das Unternehmen begleiten</h4><p>Klicke dich durch die vier Stationen.</p></div>
+    </div>
+    <div class="tool-body">
+      <div class="steps-rail" id="stepsrail" role="tablist" aria-label="Stationen der Auftragsabwicklung"></div>
+      <div class="stage">
+        <div>
+          <h4 id="stepTitle"></h4>
+          <p id="stepText" style="color:var(--muted)"></p>
+          <div id="stepKv"></div>
+          <div class="navrow">
+            <button class="btn ghost" id="stepPrev">Zurück</button>
+            <button class="btn" id="stepNext">Weiter</button>
+          </div>
+        </div>
+        <div class="stage-vis">
+          <div id="stepVis"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Was bei jeder Übergabe passiert</h3>
+  <table>
+    <thead><tr><th>Übergabe</th><th>Was weitergereicht wird</th><th>Typischer Fehler ohne gemeinsame Daten</th></tr></thead>
+    <tbody>
+      <tr><td>Vertrieb → Lager</td><td>Kommissionierliste mit Artikelnummern, Mengen, Lagerplätzen</td><td>Ware ist längst verkauft, der Bestand im Zettel aber noch aktuell</td></tr>
+      <tr><td>Lager → Versand</td><td>Bereitgestellte Ware am Packplatz, Auftragsbezug</td><td>Zwei Aufträge werden am Packplatz vertauscht</td></tr>
+      <tr><td>Versand → Buchhaltung</td><td>Lieferschein und Sendungsnummer als Nachweis</td><td>Es wird berechnet, was gar nicht geliefert wurde</td></tr>
+      <tr><td>Buchhaltung → Kunde</td><td>Rechnung mit Zahlungsziel</td><td>Rechnung geht vor der Ware raus und verärgert den Kunden</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ 3 ============ -->
+<section id="epk">
+  <div class="kapitel"><i>3</i><h2>Eine Ereignisgesteuerte Prozesskette analysieren</h2></div>
+  <p class="intro">Für eine genaue Analyse reicht ein Pfeildiagramm nicht. Die EPK ist die Standard-Notation, mit der Geschäftsprozesse eindeutig dargestellt werden – mit wenigen, festen Symbolen.</p>
+
+  <div class="grid3" style="margin:22px 0">
+    <div class="panel">
+      <div class="ev" style="cursor:default;margin-bottom:12px;display:inline-block">Auftrag liegt vor</div>
+      <h4>Ereignis</h4>
+      <p style="margin:0;color:var(--muted);font-size:15.5px">Sechseck. Beschreibt einen <strong>eingetretenen Zustand</strong> und wird passiv formuliert: „…liegt vor“, „…ist geprüft“. Ereignisse treffen keine Entscheidungen, sie stellen fest.</p>
+    </div>
+    <div class="panel">
+      <div class="fn" style="cursor:default;margin-bottom:12px;display:inline-block">Ware kommissionieren</div>
+      <h4>Funktion</h4>
+      <p style="margin:0;color:var(--muted);font-size:15.5px">Abgerundetes Rechteck. Eine <strong>Tätigkeit</strong>, aktiv formuliert mit Verb im Infinitiv: „prüfen“, „verpacken“. Funktionen verbrauchen Zeit und kosten Geld.</p>
+    </div>
+    <div class="panel">
+      <div class="org-unit" style="cursor:default;margin-bottom:12px;display:inline-block">Lager</div>
+      <h4>Organisationseinheit</h4>
+      <p style="margin:0;color:var(--muted);font-size:15.5px">Oval. Gibt an, <strong>wer</strong> die Funktion ausführt. Der Name kommt direkt aus dem Organigramm – hier treffen sich Aufbau- und Ablauforganisation.</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Wichtigste Regel:</b> Ereignis und Funktion wechseln sich immer ab. Eine EPK beginnt mit einem Ereignis und endet mit einem Ereignis. Zwei Funktionen dürfen nie direkt aufeinanderfolgen.
+  </div>
+
+  <div class="tool">
+    <div class="tool-head">
+      <div><h4>EPK: Kommissionierung und Versand</h4><p>Klicke ein Symbol an, um seine Rolle zu erklären.</p></div>
+      <div class="chips">
+        <button class="chip" id="xorToggle" aria-pressed="false">XOR-Verzweigung ergänzen</button>
+      </div>
+    </div>
+    <div class="tool-body">
+      <div class="epk" id="epkDiagram"></div>
+      <div class="legend">
+        <span><i class="swatch sw-ev"></i>Ereignis</span>
+        <span><i class="swatch sw-fn"></i>Funktion</span>
+        <span><i class="swatch sw-og"></i>Organisationseinheit</span>
+        <span><i class="swatch" style="border-color:var(--teal);background:var(--teal-soft);border-radius:50%"></i>Konnektor</span>
+      </div>
+      <div class="detail" id="epkDetail" aria-live="polite">
+        <h5>Symbol anklicken</h5>
+        <p>Lies die Kette von oben nach unten und prüfe dabei, ob sich Ereignis und Funktion sauber abwechseln.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Konnektoren: die Entscheidungspunkte</h3>
+  <div class="prose"><p>An Verzweigungen stehen Konnektoren. Sie legen fest, welche Wege gleichzeitig, wahlweise oder ausschließlich gegangen werden. Fehlt der Konnektor, ist der Prozess mehrdeutig – und damit unbrauchbar für eine Analyse.</p></div>
+  <table>
+    <thead><tr><th style="width:90px">Konnektor</th><th>Bedeutung</th><th>Beispiel aus der Auftragsabwicklung</th></tr></thead>
+    <tbody>
+      <tr><td><span class="conn" style="display:inline-grid">UND</span></td><td>Alle Wege werden ausgeführt, parallel und vollständig.</td><td>Nach dem Verpacken werden gleichzeitig der Lieferschein gedruckt und die Rechnung angestoßen.</td></tr>
+      <tr><td><span class="conn" style="display:inline-grid">ODER</span></td><td>Mindestens ein Weg wird ausgeführt, es dürfen auch mehrere sein.</td><td>Der Kunde wird per E-Mail und/oder per SMS über den Versand informiert.</td></tr>
+      <tr><td><span class="conn" style="display:inline-grid">XOR</span></td><td>Genau ein Weg wird ausgeführt – entweder-oder, niemals beides.</td><td>Entweder ist die Ware vollständig da oder es wird eine Teillieferung erzeugt.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>In drei Schritten analysieren</h3>
+  <div class="grid3" style="margin-top:18px">
+    <div class="panel"><h4>1 · Wechsel prüfen</h4><p style="margin:0;color:var(--muted);font-size:15.5px">Von oben nach unten lesen und kontrollieren, ob sich Ereignis und Funktion sauber abwechseln und ob Anfang und Ende Ereignisse sind.</p></div>
+    <div class="panel"><h4>2 · Zuständigkeit zuordnen</h4><p style="margin:0;color:var(--muted);font-size:15.5px">Jeder Funktion über die Organisationseinheit eine Abteilung aus dem Organigramm zuordnen. So wird sichtbar, wo der Auftrag die Abteilung wechselt.</p></div>
+    <div class="panel"><h4>3 · Konnektoren lesen</h4><p style="margin:0;color:var(--muted);font-size:15.5px">Auf UND, ODER und XOR achten: Sie zeigen die Entscheidungspunkte und damit die Stellen, an denen ein Prozess schiefgehen kann.</p></div>
+  </div>
+
+  <div class="tool">
+    <div class="tool-head">
+      <div><h4>Übung: EPK richtig zusammensetzen</h4><p>Klicke die Bausteine in der richtigen Reihenfolge an. Achte auf den Wechsel von Ereignis und Funktion.</p></div>
+      <div class="chips"><button class="btn ghost" id="sortReset">Neu mischen</button></div>
+    </div>
+    <div class="tool-body">
+      <div class="sorter">
+        <div class="pool"><h5>Bausteine</h5><div id="sortPool"></div></div>
+        <div class="slots"><h5>Deine Prozesskette</h5><div id="sortSlots"></div></div>
+      </div>
+      <div class="feedback" id="sortFeedback"></div>
+    </div>
+  </div>
+
+  <h3>Vom Organigramm in die EPK</h3>
+  <div class="prose"><p>Die Verbindung zwischen beiden Darstellungen ist der Kern des Themas. Fahre über eine Funktion, um zu sehen, welche Abteilung des Organigramms dahintersteht.</p></div>
+  <div class="tool">
+    <div class="tool-head"><div><h4>Zuordnung Funktion → Abteilung</h4><p>Klicke eine Funktion an, die passende Abteilung leuchtet auf.</p></div></div>
+    <div class="tool-body">
+      <div class="grid2">
+        <div>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:10px">Funktionen des Prozesses</p>
+          <div id="mapFns"></div>
+        </div>
+        <div>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:10px">Organigramm (Ausschnitt)</p>
+          <div id="mapOrg" class="org"></div>
+        </div>
+      </div>
+      <p class="hint" id="mapHint">Noch keine Funktion gewählt.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section id="darstellung">
+  <div class="kapitel"><i>4</i><h2>Prozesse übersichtlich darstellen</h2></div>
+  <p class="intro">Sobald ein Prozess über viele Abteilungen läuft, wird die senkrechte EPK unübersichtlich. Dann legt man das Diagramm quer und gibt jeder Abteilung eine eigene Bahn.</p>
+
+  <div class="prose">
+    <p>Diese Darstellung heißt <strong>Schwimmbahnen-Diagramm</strong> (Swimlanes). Jede waagerechte Bahn trägt den Namen einer Abteilung aus dem Organigramm, jede Funktion steht in der Bahn der zuständigen Abteilung. Springt ein Pfeil von einer Bahn in die nächste, ist das eine <strong>Schnittstelle</strong> – genau dort geht Zeit verloren und genau dort entstehen Fehler.</p>
+  </div>
+
+  <div class="tool">
+    <div class="tool-head">
+      <div><h4>Auftragsabwicklung in Schwimmbahnen</h4><p>Jede Bahn ist eine Abteilung, jeder Bahnwechsel eine Übergabe.</p></div>
+      <div class="chips"><button class="chip" id="cutToggle" aria-pressed="true">Schnittstellen hervorheben</button></div>
+    </div>
+    <div class="tool-body">
+      <div class="lanes" id="lanes"></div>
+      <p class="hint">Ergebnis: Vier Abteilungen, drei Schnittstellen. Jede Schnittstelle ist eine Stelle, an der Daten übergeben werden müssen – der Ansatzpunkt für IT-Unterstützung in Kapitel 6.</p>
+    </div>
+  </div>
+
+  <h3>Grundregeln für jede Prozessdarstellung</h3>
+  <ul class="clean" style="max-width:72ch">
+    <li><strong>Einheitliche Symbole.</strong> Ein Sechseck ist immer ein Ereignis – auch auf Seite drei des Diagramms.</li>
+    <li><strong>Klare Leserichtung.</strong> Entweder von oben nach unten oder von links nach rechts, aber nicht gemischt.</li>
+    <li><strong>Kurze, eindeutige Beschriftungen.</strong> „Ware kommissionieren“ statt „Bearbeitung des Vorgangs im Lagerbereich“.</li>
+    <li><strong>Namen aus dem Organigramm.</strong> Bahnen und Organisationseinheiten heißen exakt so wie die Abteilungen im Unternehmen.</li>
+    <li><strong>Verzweigungen nur mit Konnektor.</strong> Kein Pfeil teilt sich ohne UND, ODER oder XOR.</li>
+  </ul>
+</section>
+
+<!-- ============ 5 ============ -->
+<section id="lager">
+  <div class="kapitel"><i>5</i><h2>Kommissionierung und Versandabwicklung</h2></div>
+  <p class="intro">Zwei Funktionen der EPK schauen wir uns jetzt von innen an. Denn hinter „Ware kommissionieren“ steckt ein eigener kleiner Prozess.</p>
+
+  <div class="prose">
+    <p><strong>Kommissionierung</strong> heißt: die bestellten Artikel nach einer Kommissionierliste – der <em>Pickliste</em> – aus dem Lagerbestand zusammenstellen. Der Ablauf ist immer derselbe: Auftrag beziehungsweise Pickliste erhalten, im Lager zu den Lagerplätzen gehen, die richtige Artikelmenge entnehmen („picken“), auf Vollständigkeit prüfen und alles an den Packplatz bringen.</p>
+  </div>
+
+  <div class="tool">
+    <div class="tool-head">
+      <div><h4>Kommissionierung live: Auftrag 2026-4711</h4><p>Arbeite die Pickliste Position für Position ab.</p></div>
+      <div class="chips" id="pickmode" role="group" aria-label="Verfahren auswählen">
+        <button class="chip" data-mode="mzw" aria-pressed="true">Mann zur Ware</button>
+        <button class="chip" data-mode="wzm" aria-pressed="false">Ware zum Mann</button>
+      </div>
+    </div>
+    <div class="tool-body">
+      <div class="pick">
+        <div>
+          <div class="stage-vis" style="padding:10px">
+            <svg viewBox="0 0 560 300" role="img" aria-label="Lagergang mit vier Regalen, einer kommissionierenden Person und einem Packplatz">
+              <defs>
+                <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#E9EDEF"/><stop offset="1" stop-color="#D8E0E4"/>
+                </linearGradient>
+              </defs>
+              <rect x="0" y="0" width="560" height="300" fill="#F7F9F9"/>
+              <rect x="0" y="215" width="560" height="85" fill="url(#floor)"/>
+              <g stroke="#E29A18" stroke-width="4" opacity=".55">
+                <line x1="20" y1="228" x2="470" y2="228" stroke-dasharray="14 10"/>
+              </g>
+              <!-- Regale -->
+              <g id="racks"></g>
+              <!-- Packplatz -->
+              <g>
+                <rect x="470" y="150" width="76" height="66" rx="4" fill="#fff" stroke="#9FB2B9" stroke-width="2"/>
+                <rect x="470" y="150" width="76" height="16" fill="#0F2130"/>
+                <text x="508" y="162" font-family="Archivo,sans-serif" font-size="10" fill="#fff" text-anchor="middle">PACKPLATZ</text>
+                <rect x="484" y="176" width="48" height="32" rx="3" fill="#E9D9BC" stroke="#C6AF87" stroke-width="2"/>
+                <line x1="508" y1="176" x2="508" y2="208" stroke="#C6AF87" stroke-width="2"/>
+              </g>
+              <!-- Kommissionierer -->
+              <g id="picker" transform="translate(40,0)">
+                <g id="pickerBody">
+                  <rect x="-14" y="196" width="34" height="22" rx="3" fill="#B9C6CB" stroke="#8FA3AA" stroke-width="2"/>
+                  <circle cx="4" cy="170" r="11" fill="#0F2130"/>
+                  <rect x="-6" y="182" width="20" height="26" rx="7" fill="#0E6C77"/>
+                  <rect x="-16" y="186" width="12" height="6" rx="3" fill="#0E6C77"/>
+                </g>
+              </g>
+              <g id="shuttle" style="display:none" transform="translate(300,0)">
+                <rect x="-30" y="150" width="60" height="60" rx="5" fill="#fff" stroke="#9FB2B9" stroke-width="2"/>
+                <rect x="-24" y="156" width="22" height="22" rx="2" fill="#E29A18" opacity=".8"/>
+                <rect x="2" y="156" width="22" height="22" rx="2" fill="#0E6C77" opacity=".7"/>
+                <rect x="-24" y="182" width="48" height="22" rx="2" fill="#C0475F" opacity=".65"/>
+                <rect x="-34" y="212" width="68" height="10" rx="5" fill="#0F2130"/>
+                <circle cx="-18" cy="224" r="6" fill="#425A67"/><circle cx="18" cy="224" r="6" fill="#425A67"/>
+              </g>
+              <text id="sceneLabel" x="20" y="30" font-family="Archivo,sans-serif" font-size="14" font-weight="700" fill="#0F2130">Mann zur Ware</text>
+              <text id="sceneSub" x="20" y="50" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#56676F">Die Person läuft zum Regal.</text>
+            </svg>
+          </div>
+          <div class="navrow">
+            <button class="btn" id="pickNext">Nächste Position picken</button>
+            <button class="btn ghost" id="pickReset">Zurücksetzen</button>
+          </div>
+          <p class="hint" id="pickStatus">Pickliste erhalten. Der Auftrag umfasst 4 Positionen.</p>
+        </div>
+        <div>
+          <div class="picklist">
+            <header>Kommissionierliste · Auftrag 2026-4711</header>
+            <ol id="picklist"></ol>
+          </div>
+          <div class="detail" style="margin-top:14px">
+            <h5>Zwei Verfahren</h5>
+            <p id="pickModeText">Beim Verfahren <strong>Mann zur Ware</strong> läuft die kommissionierende Person mit Wagen oder Scanner durch die Gänge zu den Lagerplätzen. Das ist flexibel und günstig, aber der Laufweg kostet einen großen Teil der Arbeitszeit.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Versandabwicklung</h3>
+  <div class="prose"><p>Die Versandabwicklung schließt direkt an die Kommissionierung an. Danach ist die Ware „versendet“ – das Endereignis unserer EPK.</p></div>
+
+  <div class="grid2" style="margin-top:18px">
+    <div class="panel">
+      <h4>1 · Ware verpacken</h4>
+      <p style="margin:0;color:var(--muted);font-size:15.5px">Passende Kartongröße wählen, Ware polstern und sichern. Ziel ist eine transportsichere Sendung mit möglichst wenig Volumen, denn Volumen kostet Frachtgeld.</p>
+    </div>
+    <div class="panel">
+      <h4>2 · Versandpapiere erstellen</h4>
+      <p style="margin:0;color:var(--muted);font-size:15.5px">Lieferschein für den Kunden und Versandetikett für den Dienstleister. Auf dem Etikett steht die Sendungsnummer als Barcode.</p>
+    </div>
+    <div class="panel">
+      <h4>3 · Versandart wählen</h4>
+      <p style="margin:0;color:var(--muted);font-size:15.5px">Paketdienst für kleine Sendungen, Spedition für Paletten und Schwergut. Entscheidend sind Gewicht, Maße, Zieladresse und die zugesagte Lieferzeit.</p>
+    </div>
+    <div class="panel">
+      <h4>4 · Übergeben und erfassen</h4>
+      <p style="margin:0;color:var(--muted);font-size:15.5px">Sendung an den Fahrer übergeben und die Sendungsnummer für die Sendungsverfolgung im System erfassen. Erst jetzt gilt der Auftrag als versendet.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6 ============ -->
+<section id="it">
+  <div class="kapitel"><i>6</i><h2>Wie Informationstechnologie den Prozess unterstützt</h2></div>
+  <p class="intro">IT verbindet die einzelnen Abteilungen zu einem tatsächlich vernetzten System: Daten müssen nur einmal erfasst werden und stehen danach allen zur Verfügung.</p>
+
+  <div class="tool">
+    <div class="tool-head"><div><h4>Ein Prozessschritt – welches System hilft?</h4><p>Wähle einen Schritt aus der Auftragsabwicklung.</p></div></div>
+    <div class="tool-body">
+      <div class="chips" id="itpick" role="group" aria-label="Prozessschritt auswählen"></div>
+      <div class="detail" id="itdetail" style="margin-top:16px" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <h3>Die wichtigsten Systeme</h3>
+  <div class="grid2" style="margin-top:18px">
+    <div class="itcard">
+      <h4>ERP-System <span class="tag">z. B. SAP</span></h4>
+      <p style="margin:0;color:var(--muted);font-size:15.5px">Das zentrale System des Unternehmens. Auftrag, Lagerbestand, Versand und Rechnung arbeiten auf <strong>denselben Daten</strong>. Bucht der Vertrieb den Auftrag, sieht das Lager ihn sofort – und die Buchhaltung weiß, was zu berechnen ist.</p>
+    </div>
+    <div class="itcard">
+      <h4>Lagerverwaltung <span class="tag">LVS / WMS</span></h4>
+      <p style="margin:0;color:var(--muted);font-size:15.5px">Erzeugt die Picklisten, kennt jeden einzelnen Lagerplatz und bucht Entnahmen automatisch aus dem Bestand. Es berechnet außerdem den kürzesten Laufweg durch das Lager.</p>
+    </div>
+    <div class="itcard">
+      <h4>Barcode und RFID <span class="tag">Identifikation</span></h4>
+      <p style="margin:0;color:var(--muted);font-size:15.5px">Der Scan stellt sicher, dass der <strong>richtige</strong> Artikel entnommen wird, und der Bestand stimmt sofort. RFID-Etiketten lassen sich sogar ohne Sichtkontakt und im Pulk lesen.</p>
+    </div>
+    <div class="itcard">
+      <h4>Pick-by-Light und Pick-by-Voice <span class="tag">Führung</span></h4>
+      <p style="margin:0;color:var(--muted);font-size:15.5px">Ein Lichtsignal am Fach oder eine Sprachansage im Headset führt die Kommissionierer. Beide Hände bleiben frei, die Einarbeitung dauert nur Stunden statt Wochen.</p>
+    </div>
+    <div class="itcard">
+      <h4>Schnittstelle zum Dienstleister <span class="tag">EDI</span></h4>
+      <p style="margin:0;color:var(--muted);font-size:15.5px">Etiketten und Sendungsnummern entstehen automatisch und werden per Schnittstelle direkt an den Paketdienst übergeben. Niemand tippt eine Adresse zweimal ab.</p>
+    </div>
+    <div class="itcard">
+      <h4>Sendungsverfolgung <span class="tag">Tracking</span></h4>
+      <p style="margin:0;color:var(--muted);font-size:15.5px">Die Sendungsnummer macht den Weg des Pakets online abrufbar – für den Kunden und für den eigenen Kundenservice, der Rückfragen sofort beantworten kann.</p>
+    </div>
+  </div>
+
+  <h3>Derselbe Auftrag, zweimal gedacht</h3>
+  <div class="compare" style="margin-top:16px">
+    <div class="without">
+      <h4>Ohne durchgängige IT</h4>
+      <p style="color:var(--muted);font-size:15.5px">Der Auftrag wird auf Papier notiert, im Lager abgeschrieben, im Versand erneut eingegeben und in der Buchhaltung ein drittes Mal erfasst.</p>
+      <div class="metric">3× <small>dieselben Daten erfasst</small></div>
+      <div class="metric" style="margin-top:14px">3 <small>Stellen, an denen Tippfehler entstehen</small></div>
+      <div class="metric" style="margin-top:14px">?<small>Bestand erst am Abend aktuell</small></div>
+    </div>
+    <div class="with">
+      <h4>Mit durchgängiger IT</h4>
+      <p style="color:var(--muted);font-size:15.5px">Der Auftrag wird einmal im ERP angelegt. Pickliste, Lieferschein, Versandetikett und Rechnung entstehen daraus automatisch.</p>
+      <div class="metric">1× <small>Daten erfasst, alle greifen zu</small></div>
+      <div class="metric" style="margin-top:14px">0 <small>Übertragungsfehler durch Abschreiben</small></div>
+      <div class="metric" style="margin-top:14px">live<small>Bestand in Echtzeit korrekt</small></div>
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:26px">
+    <b>Kernsatz:</b> IT macht den Prozess schneller, fehlerärmer und transparenter. Und weil alle Abteilungen auf gemeinsame Daten zugreifen, wird aus einzelnen Abteilungen ein vernetztes System.
+  </div>
+</section>
+
+<!-- ============ TEST ============ -->
+<section id="quiz">
+  <div class="kapitel"><i>?</i><h2>Teste dich selbst</h2></div>
+  <p class="intro">Zehn Fragen quer durch alle Kapitel. Nach jeder Antwort bekommst du die Begründung – falsch geklickt ist hier ausdrücklich erlaubt.</p>
+  <div id="quizList"></div>
+  <div class="score" id="score">
+    <span>Beantwortet: <b id="scoreDone">0</b> von 10 · Richtig: <b id="scoreRight">0</b></span>
+    <button class="btn ghost" id="quizReset" style="background:#fff">Neu starten</button>
+  </div>
+</section>
+
+<!-- ============ MATERIAL ============ -->
+<section id="material">
+  <div class="kapitel"><i>PDF</i><h2>Fragenkatalog zum Ausdrucken</h2></div>
+  <p class="intro">42 Aufgaben mit vollständigen Lösungen – als roter Faden durch alle sechs Kapitel dieser Seite.</p>
+  <div class="tool" style="margin-top:6px">
+    <div class="tool-head">
+      <div><h4>Fragenkatalog · Unternehmen als vernetzte Systeme</h4><p>PDF, 8 Seiten · Wissens-, Modul- und Transferaufgaben · Lösungen im zweiten Teil</p></div>
+      <div class="chips"><a class="btn" style="text-decoration:none" href="Fragenkatalog-Unternehmen-als-vernetzte-Systeme.pdf" download>Fragenkatalog herunterladen</a></div>
+    </div>
+    <div class="tool-body">
+      <div class="grid3">
+        <div class="panel"><h4>Wissen</h4><p style="margin:0;color:var(--muted);font-size:15.5px">Begriffe, Regeln und Abläufe, die du aus den Kapiteln kennen musst – von der Instanz bis zum Kernsatz zur IT.</p></div>
+        <div class="panel"><h4>Lernmodul</h4><p style="margin:0;color:var(--muted);font-size:15.5px">Aufgaben, die du direkt an den interaktiven Werkzeugen dieser Seite löst: Organigramm, EPK, Swimlanes, Pickliste.</p></div>
+        <div class="panel"><h4>Transfer</h4><p style="margin:0;color:var(--muted);font-size:15.5px">Fehlersuche, Begründungen und zwei Abschlussaufgaben, in denen du EPK und Swimlane selbst zeichnest.</p></div>
+      </div>
+      <p class="hint">Damit der Download funktioniert, muss die PDF-Datei im selben Ordner liegen wie diese HTML-Datei.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GLOSSAR ============ -->
+<section id="glossar">
+  <div class="kapitel"><i>A–Z</i><h2>Glossar</h2></div>
+  <p class="intro">Alle Fachbegriffe dieses Moduls auf einen Blick.</p>
+  <div style="max-width:78ch">
+    <details class="gl"><summary>Ablauforganisation</summary><p>Die zeitliche Sicht auf das Unternehmen: Sie beantwortet die Frage „Wann läuft was in welcher Reihenfolge ab?“ und beschreibt damit die Prozesse.</p></details>
+    <details class="gl"><summary>Aufbauorganisation</summary><p>Die hierarchische Struktur des Unternehmens. Sie beantwortet „Wer ist wofür zuständig?“ und legt das Hauptaugenmerk auf die Aufgabenteilung in Stellen, Abteilungen und Instanzen.</p></details>
+    <details class="gl"><summary>EDI</summary><p>Elektronischer Datenaustausch zwischen zwei Unternehmen, zum Beispiel zwischen Versand und Paketdienst. Bestell- und Versanddaten werden direkt von System zu System übertragen, ohne dass jemand etwas abtippt.</p></details>
+    <details class="gl"><summary>Einliniensystem</summary><p>Leitungssystem, bei dem jede Stelle genau einen Vorgesetzten hat. Der Weisungsweg ist eindeutig, dafür sind die Wege über die Hierarchie lang.</p></details>
+    <details class="gl"><summary>EPK</summary><p>Ereignisgesteuerte Prozesskette: Standard-Notation zur eindeutigen Darstellung von Geschäftsprozessen aus Ereignissen, Funktionen, Organisationseinheiten und Konnektoren.</p></details>
+    <details class="gl"><summary>ERP-System</summary><p>Zentrales Unternehmenssystem (z. B. SAP), in dem Auftrag, Lagerbestand, Versand und Rechnung auf denselben Daten arbeiten.</p></details>
+    <details class="gl"><summary>Ereignis</summary><p>Sechseck in der EPK. Beschreibt einen eingetretenen Zustand und wird passiv formuliert, etwa „Auftrag liegt vor“.</p></details>
+    <details class="gl"><summary>Funktion</summary><p>Abgerundetes Rechteck in der EPK. Eine Tätigkeit, aktiv formuliert, etwa „Ware kommissionieren“.</p></details>
+    <details class="gl"><summary>Instanz</summary><p>Eine Stelle mit Weisungsbefugnis, also mit Leitungsfunktion – zum Beispiel eine Abteilungsleiterin.</p></details>
+    <details class="gl"><summary>Kommissionierung</summary><p>Das Zusammenstellen der bestellten Artikel aus dem Lagerbestand nach einer Kommissionierliste (Pickliste).</p></details>
+    <details class="gl"><summary>Konnektor</summary><p>Verzweigungssymbol der EPK: UND (alle Wege), ODER (mindestens einer) und XOR (genau einer, entweder-oder).</p></details>
+    <details class="gl"><summary>LVS / WMS</summary><p>Lagerverwaltungssystem. Es erzeugt Picklisten, kennt jeden Lagerplatz und bucht Entnahmen automatisch.</p></details>
+    <details class="gl"><summary>Mann zur Ware / Ware zum Mann</summary><p>Die beiden Kommissionierverfahren: Entweder läuft die Person zum Regal, oder automatische Systeme bringen die Ware zur Person.</p></details>
+    <details class="gl"><summary>Mehrliniensystem</summary><p>Leitungssystem, bei dem eine Stelle mehrere Vorgesetzte für verschiedene Fachgebiete hat. Kurze Wege, aber die Gefahr widersprüchlicher Anweisungen.</p></details>
+    <details class="gl"><summary>Organigramm</summary><p>Grafische Darstellung der Aufbauorganisation. Es zeigt Aufbau, Struktur und Aufgabenverteilung und verschafft wie eine Landkarte Übersicht und Orientierung.</p></details>
+    <details class="gl"><summary>Organisationseinheit</summary><p>Oval in der EPK. Gibt an, wer eine Funktion ausführt – der Name stammt aus dem Organigramm.</p></details>
+    <details class="gl"><summary>Pickliste</summary><p>Kommissionierliste mit Artikelnummer, Menge und Lagerplatz. Sie steuert den Weg durch das Lager.</p></details>
+    <details class="gl"><summary>Schnittstelle</summary><p>Übergabepunkt zwischen zwei Abteilungen. Im Swimlane-Diagramm überall dort, wo ein Pfeil die Bahn wechselt.</p></details>
+    <details class="gl"><summary>Stab-Linien-System</summary><p>Einliniensystem, ergänzt um Stabsstellen. Diese beraten und bereiten Entscheidungen vor, haben aber keine Weisungsbefugnis.</p></details>
+    <details class="gl"><summary>Stelle</summary><p>Kleinste Einheit der Aufbauorganisation, zum Beispiel „Sachbearbeiter Einkauf“.</p></details>
+    <details class="gl"><summary>Swimlane</summary><p>Schwimmbahnen-Diagramm: Jede Abteilung erhält eine eigene waagerechte Bahn, jede Funktion steht in der Bahn der zuständigen Abteilung.</p></details>
+  </div>
+
+  <h3 style="margin-top:44px">Das Wichtigste in fünf Sätzen</h3>
+  <ul class="clean" style="max-width:74ch">
+    <li>Die Aufbauorganisation zeigt im Organigramm, wer wofür zuständig ist; die Ablauforganisation zeigt, wann was passiert.</li>
+    <li>Ein Kundenauftrag durchläuft Vertrieb, Lager, Versand und Buchhaltung – dadurch werden die Abteilungen zum vernetzten System.</li>
+    <li>Die EPK stellt diesen Ablauf eindeutig dar: Ereignis und Funktion wechseln sich ab, Anfang und Ende sind Ereignisse, Organisationseinheiten nennen die Zuständigen.</li>
+    <li>Swimlanes machen bei vielen Beteiligten sichtbar, wo der Prozess die Abteilung wechselt – an diesen Schnittstellen entstehen die meisten Fehler.</li>
+    <li>IT sorgt dafür, dass Daten nur einmal erfasst werden und allen zur Verfügung stehen: schneller, fehlerärmer, transparenter.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <div>
+    <p style="margin:0 0 8px"><b>Unternehmen als vernetzte Systeme</b> · Unterrichtsmaterial Wirtschaftsinformatik, Jahrgangsstufe 10</p>
+    <p style="margin:0">Inhaltliche Grundlage: Unterrichtsmaterial „Das Unternehmen als vernetztes System“ sowie die Organigramm-Beispiele M1 bis M4 (mittelständischer Fleischproduzent, Fluid Engineering AG, Bauunternehmen, Logistik-Dienstleister) aus dem Schulbuchkapitel „1.1 Das Unternehmen als synergetisches System“. Alle Grafiken dieser Seite sind eingebettet, die Seite funktioniert auch ohne Internetverbindung.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const esc=t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+/* ---------------- Fortschritt & aktives Kapitel ---------------- */
+const bar=$("#progress"), links=$$(".nav a"), secs=$$("main section");
+function onScroll(){
+  const h=document.documentElement;
+  const p=h.scrollTop/(h.scrollHeight-h.clientHeight||1);
+  bar.style.width=Math.min(100,Math.max(0,p*100))+"%";
+  let cur=secs[0];
+  secs.forEach(s=>{ if(s.getBoundingClientRect().top<=140) cur=s; });
+  links.forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+cur.id));
+}
+document.addEventListener("scroll",onScroll,{passive:true}); onScroll();
+
+/* ---------------- 1 · Organigramme ---------------- */
+const S=(n,i)=>({n:n,i:i});
+const COMPANIES=[
+ {key:"fleisch",name:"Fleischproduzent",
+  source:"Quelle: M1 – Organigramm eines mittelständischen Fleischproduzenten.",
+  top:S("Geschäftsführung","Oberste Instanz. Sie trifft die strategischen Entscheidungen, ist allen Bereichen gegenüber weisungsbefugt und trägt die Gesamtverantwortung."),
+  cols:[
+   {u:S("Einkauf","Beschafft Rohstoffe und Betriebsmittel, wählt Lieferanten aus und verhandelt Preise. Ohne Einkauf steht die Produktion still."),
+    subs:[S("Beschaffung","Bestellt Fleisch, Gewürze und Verpackungen, überwacht Liefertermine und prüft die Wareneingänge."),
+          S("Kühllager","Lagert verderbliche Rohstoffe bei vorgeschriebenen Temperaturen und dokumentiert die Kühlkette lückenlos.")]},
+   {u:S("Absatz","Bündelt alles, was mit dem Verkauf zu tun hat – von der Werbung bis zum Versand der fertigen Ware."),
+    subs:[S("Werbung","Gestaltet Anzeigen, Verpackungsauftritte und Aktionen im Lebensmitteleinzelhandel."),
+          S("Marktforschung","Beobachtet, was Kundinnen und Kunden kaufen, und liefert Daten für neue Produkte."),
+          S("Verkauf","Nimmt Kundenaufträge an, prüft die Verfügbarkeit und startet damit die Auftragsabwicklung."),
+          S("Versand","Verpackt die kommissionierte Ware, erstellt Lieferschein und Etikett und übergibt die Sendung.")]},
+   {u:S("Produktion","Stellt die Wurst- und Fleischwaren her. Hier entstehen die Produkte, die der Absatz verkauft."),
+    subs:[S("Klassisch","Konventionelle Fertigungslinie mit den Standardprodukten des Sortiments."),
+          S("Bio","Getrennte Linie für zertifizierte Bio-Ware, damit die Warenströme sich nicht vermischen.")]},
+   {u:S("Verwaltung","Interner Dienstleister für alle anderen Bereiche: Zahlen, Personal und Technik."),
+    subs:[S("Buchhaltung","Schreibt Rechnungen, überwacht Zahlungseingänge und bucht alle Geschäftsvorfälle."),
+          S("Personal","Stellt ein, plant Schichten und kümmert sich um Löhne und Weiterbildung."),
+          S("IT-Abteilung","Betreibt ERP- und Lagersysteme, Netzwerke und Datensicherung – die technische Grundlage des vernetzten Systems.")]}
+  ]},
+ {key:"bau",name:"Bauunternehmen",
+  source:"Quelle: M3 – Beispiel: Organigramm eines Bauunternehmens.",
+  top:S("Geschäftsführung (Personal und Finanzen)","Leitet das Unternehmen und behält Personal und Finanzen direkt bei sich – typisch für inhabergeführte Baubetriebe."),
+  cols:[
+   {u:S("Auftragsaquisition","Sorgt für neue Aufträge: Ausschreibungen finden, Angebote rechnen, Verträge vorbereiten."),
+    subs:[S("Offertewesen","Erstellt die Angebote (Offerten) und reicht sie fristgerecht bei den Auftraggebern ein."),
+          S("Kalkulation","Berechnet, was ein Bauvorhaben kosten wird – Material, Personal, Maschinen, Risiko.")]},
+   {u:S("Bereich Hochbau","Verantwortet alle Projekte über der Erde: Wohnhäuser, Hallen, Bürogebäude."),
+    subs:[S("Projektkoordination","Stimmt Termine, Gewerke und Nachunternehmer aufeinander ab."),
+          S("Bauleitung 1","Führt eine Baustelle vor Ort: Personal, Qualität, Termine, Sicherheit."),
+          S("Bauleitung 2","Zweites Bauleitungsteam für parallel laufende Baustellen."),
+          S("Bauleitung 3","Drittes Bauleitungsteam – jede Baustelle bekommt eine eigene verantwortliche Instanz."),
+          S("Bauleitung 4","Viertes Bauleitungsteam. An der Zahl der Bauleitungen erkennt man die Größe des Bereichs.")]},
+   {u:S("Bereich Tiefbau","Verantwortet alles unter der Erde und im Verkehrswegebau."),
+    subs:[S("Tiefbau","Kanal-, Leitungs- und Erdarbeiten."),
+          S("Straßenbau","Bau und Sanierung von Straßen, Wegen und Plätzen.")]},
+   {u:S("Kaufmännische Abteilung","Kaufmännisches Rückgrat des Betriebs für alle Bau-Bereiche."),
+    subs:[S("Rechnungswesen","Bucht Ein- und Ausgangsrechnungen und erstellt den Jahresabschluss."),
+          S("Controlling","Vergleicht laufend Kalkulation und tatsächliche Kosten je Baustelle."),
+          S("Marketing","Pflegt Auftritt und Referenzen des Unternehmens."),
+          S("Einkauf","Beschafft Baustoffe und Nachunternehmerleistungen.")]}
+  ],
+  staff:{label:"Eigenständige Bereiche",items:[
+    S("Aus- und Weiterbildung","Bildet Auszubildende aus und schult Poliere und Bauleitung."),
+    S("Werkstatt","Repariert und wartet Fahrzeuge und Kleingeräte."),
+    S("Baumaschinen","Verwaltet den Maschinenpark und disponiert Kran, Bagger und Co."),
+    S("Sanierung und Garantien","Bearbeitet Mängel und Gewährleistungsfälle nach der Übergabe."),
+    S("IT","Betreut Bausoftware, Kalkulationsprogramme und die Datenverbindung zu den Baustellen.")]}},
+ {key:"logistik",name:"Logistik-Dienstleister",
+  source:"Quelle: M4 – Beispiel: Aufbauorganisation eines Logistik-Dienstleisters.",
+  top:S("Geschäftsführung","Führt drei nach Reichweite getrennte Geschäftsbereiche – regional, national, international."),
+  cols:[
+   {u:S("Geschäftsbereich Regional","Transporte im Umkreis des Stammsitzes, meist Tagestouren."),
+    subs:[S("Aquise und Kalkulation","Gewinnt Kunden in der Region und rechnet die Frachtpreise."),
+          S("Auftragsbearbeitung","Erfasst Transportaufträge und erstellt die Papiere."),
+          S("Disposition","Teilt Fahrzeuge und Fahrer den Touren zu – das Herz jedes Speditionsbetriebs."),
+          S("Lager Stammsitz","Umschlaglager direkt am Hauptstandort.")]},
+   {u:S("Geschäftsbereich National","Transporte innerhalb Deutschlands mit eigenen Lagerstandorten."),
+    subs:[S("Aquise und Kalkulation","Bundesweite Kundengewinnung und Preisberechnung."),
+          S("Auftragsbearbeitung","Auftragserfassung für den nationalen Verkehr."),
+          S("Disposition","Plant Fernverkehrstouren und Wechselbrücken."),
+          S("Lager Nord","Umschlagpunkt für die nördlichen Relationen."),
+          S("Lager Süd","Umschlagpunkt für die südlichen Relationen.")]},
+   {u:S("Geschäftsbereich International","Grenzüberschreitende Verkehre inklusive Sonderformen."),
+    subs:[S("Aquise und Kalkulation","Angebote für internationale Relationen samt Zoll und Versicherung."),
+          S("Auftragsbearbeitung","Erstellt Frachtpapiere für den grenzüberschreitenden Verkehr."),
+          S("Schwertransport","Plant Großraum- und Schwertransporte mit Genehmigungen."),
+          S("Verschiffung","Organisiert Seefracht und Containerstellung."),
+          S("Luftfracht","Bucht Luftfrachtkapazität für eilige Sendungen.")]},
+   {u:S("Verwaltung","Zentraler Dienstleister für alle drei Geschäftsbereiche."),
+    subs:[S("Personalwesen","Einstellung, Fahrerqualifikation, Lenkzeiten."),
+          S("Rechnungswesen","Fakturiert Transporte und prüft Eingangsrechnungen."),
+          S("Controlling","Wertet Kosten je Tour, Fahrzeug und Kunde aus."),
+          S("Personal","Betreut die Beschäftigten der Standorte vor Ort.")]}
+  ],
+  staff:{label:"Zentrale Dienste",items:[
+    S("EDV und Datenschutz","Betreibt Telematik, Transportmanagement-System und schützt personenbezogene Daten."),
+    S("Qualitäts Management","Überwacht Prozesse und Zertifizierungen."),
+    S("Technische Dienste","Kümmert sich um Werkstatt, Fuhrpark und Ladetechnik."),
+    S("Rechtsabteilung","Prüft Verträge, Haftungsfragen und Schadensfälle.")]}},
+ {key:"fluid",name:"Fluid Engineering AG",
+  source:"Quelle: M2 – Aufbauorganisation einer Fluid Engineering AG (Textbeschreibung).",
+  top:S("CEO mit Sekretariat","An der Spitze steht der CEO (Chief Executive Officer), der als Geschäftsführer das Unternehmen leitet und von einem eigenen Sekretariat unterstützt wird."),
+  cols:[
+   {u:S("Pumps Equipment","Pumpenfertigung. Weitgehend eigenständige Geschäftseinheit mit eigener Ergebnisverantwortung."),
+    subs:[S("Fertigung","Baut die Pumpen für Industrie und Energiewirtschaft."),S("Produktentwicklung","Entwickelt neue Pumpenbaureihen.")]},
+   {u:S("Rotating Equipment Service","Wartung von Pumpen, Turbinen und ähnlichen rotierenden Maschinen."),
+    subs:[S("Serviceeinsätze","Wartung und Reparatur beim Kunden vor Ort."),S("Ersatzteile","Hält Ersatzteile vor und liefert sie termingerecht.")]},
+   {u:S("Chemtech","Verfahrenstechnik für die chemische Industrie."),
+    subs:[S("Anlagenbau","Plant und errichtet verfahrenstechnische Anlagen."),S("Prozesstechnik","Optimiert bestehende Verfahren beim Kunden.")]},
+   {u:S("Applicator Systems","Mischverfahren und Auftragssysteme."),
+    subs:[S("Mischsysteme","Entwickelt Systeme zum exakten Mischen von Komponenten."),S("Applikation","Systeme für das präzise Auftragen von Klebstoffen und Massen.")]}
+  ],
+  staff:{label:"Ausgelagerte Dienstleister",items:[
+    S("Corporate Finance","Finanzabteilung für alle Geschäftsbereiche."),
+    S("Corporate Development","Verantwortet die Unternehmensfortentwicklung."),
+    S("Markets & Technology","Analysiert Märkte und zukünftige technologische Entwicklungen.")]}}
+];
+
+function boxBtn(item,cls){
+  return '<button class="box '+cls+'" data-n="'+esc(item.n)+'" data-i="'+esc(item.i)+'">'+esc(item.n)+'</button>';
+}
+function renderOrg(c,mount){
+  const n=c.cols.length+(c.staff?1:0);
+  let h='<div class="org-inner" style="min-width:'+(n*164)+'px">';
+  h+='<div class="org-top">'+boxBtn(c.top,"lead")+'</div><div class="rail"></div>';
+  h+='<div class="crossbar" style="margin:0 calc(50% / '+n+')"></div>';
+  h+='<div class="org-cols">';
+  c.cols.forEach(col=>{
+    h+='<div class="org-col">'+boxBtn(col.u,"unit")+'<div class="subs">';
+    col.subs.forEach(s=>{h+=boxBtn(s,"sub");});
+    h+='</div></div>';
+  });
+  if(c.staff){
+    h+='<div class="org-col"><div class="box unit" style="background:#EDEAF4;border-color:#D2CBE4">'+esc(c.staff.label)+'</div><div class="subs">';
+    c.staff.items.forEach(s=>{h+=boxBtn(s,"staff");});
+    h+='</div></div>';
+  }
+  h+='</div></div>';
+  mount.innerHTML=h;
+}
+const orgChart=$("#orgchart"), orgDetail=$("#orgdetail"), orgSource=$("#orgsource"), orgPick=$("#orgpick");
+COMPANIES.forEach((c,idx)=>{
+  const b=document.createElement("button");
+  b.className="chip"; b.textContent=c.name; b.setAttribute("aria-pressed",idx===0?"true":"false");
+  b.addEventListener("click",()=>{
+    $$("#orgpick .chip").forEach(x=>x.setAttribute("aria-pressed","false"));
+    b.setAttribute("aria-pressed","true"); show(c);
+  });
+  orgPick.appendChild(b);
+});
+function show(c){
+  renderOrg(c,orgChart); orgSource.textContent=c.source;
+  orgDetail.innerHTML='<h5>Kasten anklicken</h5><p>Jeder Kasten ist eine organisatorische Einheit. Wähle einen aus, um zu erfahren, welche Aufgaben dort erledigt werden.</p>';
+}
+show(COMPANIES[0]);
+orgChart.addEventListener("click",e=>{
+  const b=e.target.closest("button.box"); if(!b) return;
+  $$("#orgchart .box").forEach(x=>x.classList.remove("sel")); b.classList.add("sel");
+  orgDetail.innerHTML='<h5>'+esc(b.dataset.n)+'</h5><p>'+esc(b.dataset.i)+'</p>';
+});
+
+/* ---------------- 1b · Leitungssysteme ---------------- */
+const LINES={
+ ein:{t:"Einliniensystem",
+   d:"Jede Stelle hat genau <strong>einen</strong> Vorgesetzten. Der Weisungsweg ist eindeutig und Verantwortung klar zuordenbar. Nachteil: Informationen müssen den ganzen Dienstweg entlang wandern, das dauert.",
+   svg:'<svg viewBox="0 0 520 210" role="img" aria-label="Einliniensystem: eine Leitung, drei Abteilungen, jede mit einer Linie"><g stroke="#0F2130" stroke-width="2" fill="none"><path d="M260 44 V70 M110 70 H410 M110 70 V96 M260 70 V96 M410 70 V96 M110 132 V158 M260 132 V158 M410 132 V158"/></g><g font-family="Archivo,sans-serif" font-size="13" text-anchor="middle"><rect x="200" y="16" width="120" height="28" rx="6" fill="#F8E3E7" stroke="#C0475F"/><text x="260" y="35" fill="#6E2233">Geschäftsleitung</text><rect x="55" y="96" width="110" height="36" rx="6" fill="#FBF0D3" stroke="#D9A62B"/><text x="110" y="119" fill="#6B5210">Einkauf</text><rect x="205" y="96" width="110" height="36" rx="6" fill="#FBF0D3" stroke="#D9A62B"/><text x="260" y="119" fill="#6B5210">Produktion</text><rect x="355" y="96" width="110" height="36" rx="6" fill="#FBF0D3" stroke="#D9A62B"/><text x="410" y="119" fill="#6B5210">Vertrieb</text><rect x="65" y="158" width="90" height="30" rx="6" fill="#E7EEF1" stroke="#CBDBE1"/><text x="110" y="178" fill="#152430">Stelle A</text><rect x="215" y="158" width="90" height="30" rx="6" fill="#E7EEF1" stroke="#CBDBE1"/><text x="260" y="178" fill="#152430">Stelle B</text><rect x="365" y="158" width="90" height="30" rx="6" fill="#E7EEF1" stroke="#CBDBE1"/><text x="410" y="178" fill="#152430">Stelle C</text></g></svg>'},
+ mehr:{t:"Mehrliniensystem",
+   d:"Eine Stelle hat <strong>mehrere</strong> Vorgesetzte, jeweils für ein Fachgebiet. Die Wege sind kurz und die Fachkompetenz hoch – dafür kann es widersprüchliche Anweisungen geben.",
+   svg:'<svg viewBox="0 0 520 210" role="img" aria-label="Mehrliniensystem: eine Stelle bekommt Weisungen von zwei Leitungen"><g stroke="#0F2130" stroke-width="2" fill="none"><path d="M260 44 V64 M150 64 H370 M150 64 V96 M370 64 V96"/></g><g stroke="#C0475F" stroke-width="2" fill="none" stroke-dasharray="5 4"><path d="M150 132 L215 158 M370 132 L305 158"/></g><g font-family="Archivo,sans-serif" font-size="13" text-anchor="middle"><rect x="200" y="16" width="120" height="28" rx="6" fill="#F8E3E7" stroke="#C0475F"/><text x="260" y="35" fill="#6E2233">Geschäftsleitung</text><rect x="90" y="96" width="120" height="36" rx="6" fill="#FBF0D3" stroke="#D9A62B"/><text x="150" y="119" fill="#6B5210">Leitung Technik</text><rect x="310" y="96" width="120" height="36" rx="6" fill="#FBF0D3" stroke="#D9A62B"/><text x="370" y="119" fill="#6B5210">Leitung Kaufm.</text><rect x="200" y="158" width="120" height="34" rx="6" fill="#E7EEF1" stroke="#CBDBE1"/><text x="260" y="180" fill="#152430">Sachbearbeiter</text></g><text x="260" y="146" font-family="IBM Plex Sans,sans-serif" font-size="11" fill="#C0475F" text-anchor="middle">zwei Weisungswege</text></svg>'},
+ stab:{t:"Stab-Linien-System",
+   d:"Ein Einliniensystem, ergänzt um <strong>Stabsstellen</strong>. Diese beraten und bereiten Entscheidungen vor – zum Beispiel Recht, Datenschutz oder Qualitätsmanagement –, sind aber <strong>nicht weisungsbefugt</strong>. Im Organigramm hängen sie seitlich an der Linie.",
+   svg:'<svg viewBox="0 0 520 210" role="img" aria-label="Stab-Linien-System: seitlich angehängte Stabsstelle ohne Weisungsbefugnis"><g stroke="#0F2130" stroke-width="2" fill="none"><path d="M260 44 V78 M130 78 H390 M130 78 V104 M260 78 V104 M390 78 V104"/></g><line x1="260" y1="60" x2="358" y2="60" stroke="#7A6DA8" stroke-width="2" stroke-dasharray="5 4"/><g font-family="Archivo,sans-serif" font-size="13" text-anchor="middle"><rect x="200" y="16" width="120" height="28" rx="6" fill="#F8E3E7" stroke="#C0475F"/><text x="260" y="35" fill="#6E2233">Geschäftsleitung</text><rect x="358" y="44" width="120" height="32" rx="6" fill="#EDEAF4" stroke="#7A6DA8"/><text x="418" y="64" fill="#3C3560">Stab: Recht</text><rect x="75" y="104" width="110" height="36" rx="6" fill="#FBF0D3" stroke="#D9A62B"/><text x="130" y="127" fill="#6B5210">Einkauf</text><rect x="205" y="104" width="110" height="36" rx="6" fill="#FBF0D3" stroke="#D9A62B"/><text x="260" y="127" fill="#6B5210">Produktion</text><rect x="335" y="104" width="110" height="36" rx="6" fill="#FBF0D3" stroke="#D9A62B"/><text x="390" y="127" fill="#6B5210">Vertrieb</text></g><text x="260" y="172" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#56676F" text-anchor="middle">gestrichelt = beratend, ohne Weisungsbefugnis</text></svg>'}
+};
+function setLine(k){
+  $("#linevis").innerHTML=LINES[k].svg;
+  $("#linedetail").innerHTML='<h5>'+LINES[k].t+'</h5><p>'+LINES[k].d+'</p>';
+  $$("#linepick .chip").forEach(c=>c.setAttribute("aria-pressed",String(c.dataset.line===k)));
+}
+$$("#linepick .chip").forEach(c=>c.addEventListener("click",()=>setLine(c.dataset.line)));
+setLine("ein");
+
+/* ---------------- 2 · Auftragsabwicklung ---------------- */
+const STEPS=[
+ {ab:"Vertrieb",t:"Auftrag annehmen und prüfen",
+  x:"Die Bestellung geht per Onlineshop, E-Mail oder Telefon ein. Der Vertrieb erfasst sie, prüft Kunde und Konditionen und fragt den Lagerbestand ab. Nur wenn die Ware verfügbar ist, wird der Auftrag bestätigt.",
+  kv:[["Auslöser","Kundenbestellung geht ein"],["Ergebnis","Auftrag ist erfasst und bestätigt"],["Daten","Auftragsnummer, Kunde, Artikel, Menge, Liefertermin"],["Weitergabe","Kommissionierauftrag an das Lager"]],
+  icon:"cart"},
+ {ab:"Lager",t:"Ware kommissionieren",
+  x:"Das Lager erhält die Pickliste, sammelt die Artikel an ihren Lagerplätzen ein, prüft die Vollständigkeit und stellt alles am Packplatz bereit. Jede Entnahme wird aus dem Bestand gebucht.",
+  kv:[["Auslöser","Kommissionierauftrag liegt vor"],["Ergebnis","Ware ist bereitgestellt"],["Daten","Pickliste mit Lagerplätzen, gebuchte Entnahmen"],["Weitergabe","Bereitgestellte Ware an den Versand"]],
+  icon:"box"},
+ {ab:"Versandabteilung",t:"Verpacken und versenden",
+  x:"Die Ware wird transportsicher verpackt, Lieferschein und Versandetikett werden gedruckt, Versandart und Dienstleister werden gewählt. Nach der Übergabe an den Fahrer wird die Sendungsnummer erfasst.",
+  kv:[["Auslöser","Ware ist bereitgestellt"],["Ergebnis","Ware ist versendet"],["Daten","Lieferschein, Versandetikett, Sendungsnummer"],["Weitergabe","Liefernachweis an die Buchhaltung"]],
+  icon:"truck"},
+ {ab:"Buchhaltung",t:"Rechnung stellen",
+  x:"Auf Basis des Lieferscheins entsteht die Rechnung. Sie geht an den Kunden, der Zahlungseingang wird überwacht. Erst mit der bezahlten Rechnung ist der Auftrag wirklich abgeschlossen.",
+  kv:[["Auslöser","Ware ist versendet"],["Ergebnis","Rechnung ist gestellt"],["Daten","Rechnungsnummer, Betrag, Zahlungsziel"],["Weitergabe","Rechnung an den Kunden"]],
+  icon:"invoice"}
+];
+const ICONS={
+ cart:'<svg viewBox="0 0 200 130" role="img" aria-label="Auftragserfassung am Bildschirm"><rect x="30" y="18" width="140" height="82" rx="6" fill="#fff" stroke="#9FB2B9" stroke-width="2"/><rect x="30" y="18" width="140" height="16" rx="6" fill="#0F2130"/><rect x="44" y="46" width="70" height="8" rx="4" fill="#CAD4D8"/><rect x="44" y="62" width="100" height="8" rx="4" fill="#CAD4D8"/><rect x="44" y="78" width="52" height="8" rx="4" fill="#E29A18"/><rect x="80" y="100" width="40" height="8" fill="#9FB2B9"/><rect x="66" y="108" width="68" height="6" rx="3" fill="#0F2130"/></svg>',
+ box:'<svg viewBox="0 0 200 130" role="img" aria-label="Karton mit Ware"><path d="M40 46 L100 22 L160 46 L100 70 Z" fill="#E9D9BC" stroke="#C6AF87" stroke-width="2"/><path d="M40 46 V96 L100 118 V70 Z" fill="#DCC9A6" stroke="#C6AF87" stroke-width="2"/><path d="M160 46 V96 L100 118 V70 Z" fill="#CBB68F" stroke="#C6AF87" stroke-width="2"/><rect x="86" y="30" width="28" height="10" fill="#E29A18" opacity=".8"/></svg>',
+ truck:'<svg viewBox="0 0 200 130" role="img" aria-label="Lieferfahrzeug"><rect x="20" y="46" width="90" height="46" rx="4" fill="#0E6C77"/><path d="M110 60 h34 l22 22 v10 h-56 z" fill="#B9C6CB" stroke="#8FA3AA" stroke-width="2"/><circle cx="52" cy="98" r="11" fill="#0F2130"/><circle cx="140" cy="98" r="11" fill="#0F2130"/><rect x="34" y="58" width="30" height="6" rx="3" fill="#fff" opacity=".7"/></svg>',
+ invoice:'<svg viewBox="0 0 200 130" role="img" aria-label="Rechnung"><rect x="58" y="14" width="84" height="104" rx="4" fill="#fff" stroke="#9FB2B9" stroke-width="2"/><rect x="70" y="30" width="42" height="7" rx="3" fill="#0F2130"/><rect x="70" y="48" width="60" height="6" rx="3" fill="#CAD4D8"/><rect x="70" y="62" width="60" height="6" rx="3" fill="#CAD4D8"/><rect x="70" y="76" width="36" height="6" rx="3" fill="#CAD4D8"/><rect x="70" y="94" width="60" height="10" rx="3" fill="#E29A18" opacity=".85"/></svg>'
+};
+const rail=$("#stepsrail"); let stepI=0;
+STEPS.forEach((s,i)=>{
+  const b=document.createElement("button");
+  b.setAttribute("role","tab"); b.innerHTML='<b>'+esc(s.ab)+'</b>'+esc(s.t);
+  b.addEventListener("click",()=>setStep(i)); rail.appendChild(b);
+});
+function setStep(i){
+  stepI=Math.max(0,Math.min(STEPS.length-1,i)); const s=STEPS[stepI];
+  Array.from(rail.children).forEach((b,j)=>b.setAttribute("aria-current",String(j===stepI)));
+  $("#stepTitle").textContent=(stepI+1)+" · "+s.t;
+  $("#stepText").textContent=s.x;
+  $("#stepKv").innerHTML=s.kv.map(k=>'<div class="kv"><b>'+esc(k[0])+'</b><span>'+esc(k[1])+'</span></div>').join("");
+  $("#stepVis").innerHTML='<p style="margin:0 0 10px;font-family:Archivo,sans-serif;font-weight:700">'+esc(s.ab)+'</p>'+ICONS[s.icon];
+  $("#stepPrev").disabled=stepI===0; $("#stepNext").disabled=stepI===STEPS.length-1;
+}
+$("#stepPrev").addEventListener("click",()=>setStep(stepI-1));
+$("#stepNext").addEventListener("click",()=>setStep(stepI+1));
+setStep(0);
+
+/* ---------------- 3 · EPK ---------------- */
+const I={
+ e1:"Startereignis. Eine EPK beginnt immer mit einem Ereignis. Passiv formuliert, weil hier nichts getan wird – es wird nur festgestellt, dass der Auftrag vorliegt.",
+ f1:"Funktion: eine Tätigkeit, aktiv formuliert. Sie verbraucht Zeit und Ressourcen. Ausgeführt wird sie von der Organisationseinheit, die daneben steht.",
+ o1:"Organisationseinheit Lager. Der Name stammt direkt aus dem Organigramm – hier verbinden sich Aufbau- und Ablauforganisation.",
+ e2:"Zwischenereignis. Es beschreibt den Zustand nach der Kommissionierung und ist gleichzeitig der Auslöser für den nächsten Schritt.",
+ f2:"Funktion des Versands. Beachte den Wechsel der Organisationseinheit von Lager zu Versand: Genau hier liegt eine Schnittstelle zwischen zwei Abteilungen.",
+ o2:"Organisationseinheit Versand. Ab hier trägt eine andere Abteilung die Verantwortung für den Auftrag.",
+ e3:"Endereignis. Eine EPK endet immer mit einem Ereignis – der Prozess ist an dieser Stelle abgeschlossen.",
+ x1:"XOR-Konnektor (entweder-oder). Genau einer der beiden Wege wird gegangen: entweder ist die Lieferung vollständig oder es wird eine Teillieferung erzeugt. Beides gleichzeitig ist ausgeschlossen.",
+ x2:"Zusammenführender XOR-Konnektor. Er führt die beiden Wege wieder zusammen, damit der Prozess in einem gemeinsamen Endereignis endet.",
+ ea:"Ereignis nach der Entscheidung: die vollständige Lieferung ist möglich.",
+ eb:"Ereignis nach der Entscheidung: es ist nur eine Teilmenge verfügbar.",
+ fb:"Funktion für den Sonderfall. Auch Ausnahmen gehören in eine vollständige EPK, sonst bildet sie die Wirklichkeit nicht ab."
+};
+const EV=(t,k)=>'<div class="ev" tabindex="0" data-k="'+k+'">'+esc(t)+'</div>';
+const FN=(t,k,org,ok)=>'<div class="epk-row"><div class="fn" tabindex="0" data-k="'+k+'">'+esc(t)+'</div><div class="org-unit" tabindex="0" data-k="'+ok+'">'+esc(org)+'</div></div>';
+const AR='<div class="arrow"></div>';
+const CN=(t,k)=>'<div class="conn" tabindex="0" data-k="'+k+'" style="cursor:pointer">'+t+'</div>';
+function renderEPK(xor){
+  let h=EV("Kundenauftrag liegt vor","e1")+AR+FN("Ware kommissionieren","f1","Lager","o1")+AR+EV("Ware bereitgestellt","e2")+AR;
+  if(!xor){
+    h+=FN("Verpacken & versenden","f2","Versand","o2")+AR+EV("Ware ist versendet","e3");
+  }else{
+    h+=CN("XOR","x1");
+    h+='<div class="epk-branch" style="margin-top:14px">'+
+       '<div>'+EV("Lieferung ist vollständig","ea")+AR+FN("Verpacken & versenden","f2","Versand","o2")+'</div>'+
+       '<div>'+EV("Nur Teilmenge verfügbar","eb")+AR+FN("Teillieferung erzeugen","fb","Versand","o2")+'</div>'+
+       '</div>'+AR+CN("XOR","x2")+AR+EV("Ware ist versendet","e3");
+  }
+  $("#epkDiagram").innerHTML=h;
+}
+renderEPK(false);
+function epkPick(el){
+  if(!el||!el.dataset.k) return;
+  $$("#epkDiagram [data-k]").forEach(x=>x.classList.remove("selected-el"));
+  el.classList.add("selected-el");
+  $("#epkDetail").innerHTML='<h5>'+esc(el.textContent.trim())+'</h5><p>'+I[el.dataset.k]+'</p>';
+}
+$("#epkDiagram").addEventListener("click",e=>epkPick(e.target.closest("[data-k]")));
+$("#epkDiagram").addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();epkPick(e.target.closest("[data-k]"));}});
+$("#xorToggle").addEventListener("click",()=>{
+  const on=$("#xorToggle").getAttribute("aria-pressed")==="true";
+  $("#xorToggle").setAttribute("aria-pressed",String(!on));
+  $("#xorToggle").textContent=!on?"XOR-Verzweigung entfernen":"XOR-Verzweigung ergänzen";
+  renderEPK(!on);
+  $("#epkDetail").innerHTML=!on
+    ?'<h5>XOR ergänzt</h5><p>An „Ware bereitgestellt“ steht jetzt eine Entscheidung: entweder vollständige Lieferung oder Teillieferung. Prüfe, ob sich Ereignis und Funktion in <em>beiden</em> Zweigen weiterhin abwechseln.</p>'
+    :'<h5>Symbol anklicken</h5><p>Lies die Kette von oben nach unten und prüfe dabei, ob sich Ereignis und Funktion sauber abwechseln.</p>';
+});
+
+/* ---------------- 3b · Sortier-Übung ---------------- */
+const TILES=[
+ {t:"Kundenauftrag liegt vor",k:"ev"},{t:"Verfügbarkeit prüfen",k:"fn"},
+ {t:"Ware ist verfügbar",k:"ev"},{t:"Ware kommissionieren",k:"fn"},
+ {t:"Ware bereitgestellt",k:"ev"},{t:"Verpacken & versenden",k:"fn"},
+ {t:"Ware ist versendet",k:"ev"}];
+let placed=[], order=TILES.map((t,i)=>i).sort(()=>Math.random()-.5);
+function drawSorter(){
+  const shuffled=order.filter(i=>placed.indexOf(i)<0);
+  $("#sortPool").innerHTML=shuffled.map(i=>'<button class="tile t-'+TILES[i].k+'" data-i="'+i+'">'+esc(TILES[i].t)+'</button>').join("")
+    ||'<p style="color:var(--muted);font-size:15px;margin:0">Alle Bausteine gesetzt.</p>';
+  let s="";
+  for(let p=0;p<TILES.length;p++){
+    if(p<placed.length){
+      const i=placed[p], ok=(i===p);
+      s+='<div class="slot filled '+(ok?"ok":"bad")+'">'+(p+1)+'. '+esc(TILES[i].t)+'</div>';
+    }else{
+      s+='<div class="slot">'+(p+1)+'. '+(p===placed.length?"hier klickst du als Nächstes":"")+'</div>';
+    }
+  }
+  $("#sortSlots").innerHTML=s;
+  const fb=$("#sortFeedback");
+  if(placed.length===TILES.length){
+    const allOk=placed.every((v,i)=>v===i);
+    fb.className="feedback show "+(allOk?"good":"bad");
+    fb.innerHTML=allOk
+      ?"Richtig. Ereignis und Funktion wechseln sich durchgehend ab, die Kette beginnt und endet mit einem Ereignis."
+      :"Noch nicht ganz. Prüfe die rot markierten Positionen: Nach einem Ereignis muss immer eine Funktion folgen – und umgekehrt.";
+  }else{fb.className="feedback";}
+}
+$("#sortPool").addEventListener("click",e=>{
+  const b=e.target.closest(".tile"); if(!b) return;
+  placed.push(parseInt(b.dataset.i,10)); drawSorter();
+});
+$("#sortReset").addEventListener("click",()=>{placed=[];order=TILES.map((t,i)=>i).sort(()=>Math.random()-.5);drawSorter();});
+drawSorter();
+
+/* ---------------- 3c · Funktion → Abteilung ---------------- */
+const MAP=[
+ {f:"Auftrag erfassen",a:"Vertrieb",x:"Der Vertrieb nimmt den Auftrag an und prüft die Verfügbarkeit."},
+ {f:"Ware kommissionieren",a:"Lager",x:"Das Lager stellt die Ware nach Pickliste zusammen."},
+ {f:"Verpacken & versenden",a:"Versand",x:"Die Versandabteilung verpackt, erstellt Papiere und übergibt die Sendung."},
+ {f:"Rechnung erstellen",a:"Buchhaltung",x:"Die Buchhaltung fakturiert auf Basis des Lieferscheins."}];
+$("#mapFns").innerHTML=MAP.map((m,i)=>'<button class="tile t-fn" data-i="'+i+'">'+esc(m.f)+'</button>').join("");
+const MINI={cols:[{u:S("Vertrieb",""),subs:[S("Verkauf",""),S("Angebote","")]},
+                  {u:S("Lager",""),subs:[S("Kommissionierung",""),S("Bestand","")]},
+                  {u:S("Versand",""),subs:[S("Verpackung",""),S("Frachtwahl","")]},
+                  {u:S("Buchhaltung",""),subs:[S("Fakturierung",""),S("Zahlungen","")]}],
+            top:S("Geschäftsleitung","")};
+renderOrg(MINI,$("#mapOrg"));
+$$("#mapOrg button.box").forEach(b=>{b.disabled=true;b.style.cursor="default";});
+$("#mapFns").addEventListener("click",e=>{
+  const b=e.target.closest(".tile"); if(!b) return;
+  const m=MAP[parseInt(b.dataset.i,10)];
+  $$("#mapFns .tile").forEach(t=>t.style.boxShadow=""); b.style.boxShadow="0 0 0 3px rgba(14,108,119,.25)";
+  $$("#mapOrg .box").forEach(x=>x.classList.remove("sel"));
+  $$("#mapOrg .box").forEach(x=>{if(x.dataset.n===m.a) x.classList.add("sel");});
+  $("#mapHint").innerHTML="<strong>"+esc(m.f)+"</strong> → Organisationseinheit <strong>"+esc(m.a)+"</strong>. "+esc(m.x);
+});
+
+/* ---------------- 4 · Swimlanes ---------------- */
+const LANES=[
+ {n:"Vertrieb",c:{0:"Auftrag erfassen",1:"Verfügbarkeit prüfen"}},
+ {n:"Lager",c:{2:"Ware kommissionieren"},cut:[2]},
+ {n:"Versandabteilung",c:{3:"Verpacken & versenden"},cut:[3]},
+ {n:"Buchhaltung",c:{4:"Rechnung erstellen"},cut:[4]}];
+$("#lanes").innerHTML=LANES.map(l=>{
+  let cells="";
+  for(let i=0;i<5;i++){
+    const isCut=l.cut&&l.cut.indexOf(i)>=0;
+    cells+='<div class="cell'+(isCut?" cut":"")+'">'+(l.c[i]?'<div class="lane-fn">'+esc(l.c[i])+'</div>':"")+'</div>';
+  }
+  return '<div class="lane"><div class="lane-name">'+esc(l.n)+'</div>'+cells+'</div>';
+}).join("");
+$("#cutToggle").addEventListener("click",()=>{
+  const on=$("#cutToggle").getAttribute("aria-pressed")==="true";
+  $("#cutToggle").setAttribute("aria-pressed",String(!on));
+  $("#lanes").classList.toggle("hide-cut",on);
+});
+
+/* ---------------- 5 · Kommissionierung ---------------- */
+const POS=[
+ {a:"Dichtmasse grau",nr:"40182",p:"A-03",m:"12 Stück",r:0},
+ {a:"Kartuschenpistole",nr:"40910",p:"B-11",m:"2 Stück",r:1},
+ {a:"Abdeckvlies 25 m",nr:"51204",p:"C-02",m:"4 Rollen",r:2},
+ {a:"Reinigungstücher",nr:"51730",p:"D-07",m:"1 Karton",r:3}];
+const RACKX=[70,175,280,385], STOPX=[52,157,262,367], PACKX=436;
+(function racks(){
+  let s="";
+  RACKX.forEach((x,i)=>{
+    s+='<g id="rack'+i+'"><rect x="'+x+'" y="72" width="66" height="146" fill="#fff" stroke="#8FA3AA" stroke-width="2"/>';
+    for(let r=0;r<3;r++){
+      const y=76+r*48;
+      s+='<line x1="'+x+'" y1="'+(y+44)+'" x2="'+(x+66)+'" y2="'+(y+44)+'" stroke="#8FA3AA" stroke-width="2"/>';
+      s+='<rect x="'+(x+6)+'" y="'+(y+8)+'" width="24" height="30" rx="2" fill="#E9D9BC" stroke="#C6AF87"/>';
+      s+='<rect x="'+(x+36)+'" y="'+(y+14)+'" width="22" height="24" rx="2" fill="'+(r===1?"#E29A18":"#B9C6CB")+'" opacity=".8"/>';
+    }
+    s+='<text x="'+(x+33)+'" y="66" font-family="Archivo,sans-serif" font-size="12" font-weight="700" fill="#0F2130" text-anchor="middle">'+"ABCD"[i]+'</text></g>';
+  });
+  $("#racks").innerHTML=s;
+})();
+const picker=$("#picker"), shuttle=$("#shuttle");
+picker.style.transition="transform .9s cubic-bezier(.5,0,.3,1)";
+shuttle.style.transition="transform .9s cubic-bezier(.5,0,.3,1)";
+let done=0, mode="mzw";
+function drawPicklist(){
+  $("#picklist").innerHTML=POS.map((p,i)=>
+    '<li class="'+(i<done?"done":"")+'"><span class="dot"></span><span>'+esc(p.a)+'<br><small style="color:var(--muted)">Art. '+p.nr+' · Platz '+p.p+'</small></span><span class="qty">'+esc(p.m)+'</span></li>').join("");
+}
+function moveTo(x){ picker.setAttribute("transform","translate("+x+",0)"); }
+function pickNext(){
+  if(done>=POS.length){
+    moveTo(PACKX);
+    $("#pickStatus").innerHTML="<strong>Fertig.</strong> Vollständigkeit geprüft, Ware am Packplatz bereitgestellt – das Ereignis „Ware bereitgestellt“ ist eingetreten. Jetzt übernimmt der Versand.";
+    $("#pickNext").disabled=true; return;
+  }
+  const p=POS[done];
+  if(mode==="mzw"){ moveTo(STOPX[p.r]); }
+  else{ shuttle.setAttribute("transform","translate("+(RACKX[p.r]+33)+",0)");
+        setTimeout(()=>shuttle.setAttribute("transform","translate(390,0)"),950); }
+  done++; drawPicklist();
+  $("#pickStatus").innerHTML="Position "+done+" von "+POS.length+" gepickt: <strong>"+esc(p.m)+" "+esc(p.a)+"</strong> von Lagerplatz "+p.p+". Der Scan bucht die Entnahme sofort aus dem Bestand.";
+  if(done>=POS.length) $("#pickNext").textContent="Prüfen und zum Packplatz";
+}
+$("#pickNext").addEventListener("click",pickNext);
+$("#pickReset").addEventListener("click",()=>{
+  done=0; drawPicklist(); moveTo(mode==="mzw"?40:440);
+  shuttle.setAttribute("transform","translate(300,0)");
+  $("#pickNext").disabled=false; $("#pickNext").textContent="Nächste Position picken";
+  $("#pickStatus").textContent="Pickliste erhalten. Der Auftrag umfasst 4 Positionen.";
+});
+$$("#pickmode .chip").forEach(c=>c.addEventListener("click",()=>{
+  mode=c.dataset.mode;
+  $$("#pickmode .chip").forEach(x=>x.setAttribute("aria-pressed",String(x===c)));
+  const mzw=mode==="mzw";
+  shuttle.style.display=mzw?"none":"block";
+  $("#sceneLabel").textContent=mzw?"Mann zur Ware":"Ware zum Mann";
+  $("#sceneSub").textContent=mzw?"Die Person läuft zum Regal.":"Ein Shuttle bringt die Ware zur Person.";
+  $("#pickModeText").innerHTML=mzw
+    ?'Beim Verfahren <strong>Mann zur Ware</strong> läuft die kommissionierende Person mit Wagen oder Scanner durch die Gänge zu den Lagerplätzen. Das ist flexibel und günstig, aber der Laufweg kostet einen großen Teil der Arbeitszeit.'
+    :'Beim Verfahren <strong>Ware zum Mann</strong> bringen automatische Systeme – Regalbediengeräte, Shuttles, Förderbänder – die Ware zum festen Arbeitsplatz. Das spart Laufwege und ist sehr schnell, erfordert aber hohe Investitionen.';
+  $("#pickReset").click();
+}));
+drawPicklist();
+
+/* ---------------- 6 · IT je Prozessschritt ---------------- */
+const ITS=[
+ {s:"Auftrag erfassen",sys:"ERP-System",x:"Der Auftrag wird ein einziges Mal angelegt. Kundendaten, Preise und Konditionen kommen automatisch aus den Stammdaten, der verfügbare Bestand wird in Echtzeit angezeigt."},
+ {s:"Verfügbarkeit prüfen",sys:"ERP + Lagerverwaltung",x:"Das LVS meldet den tatsächlichen Bestand je Lagerplatz an das ERP. Der Vertrieb sieht sofort, ob vollständig geliefert werden kann – ohne im Lager anzurufen."},
+ {s:"Kommissionieren",sys:"LVS, Scanner, Pick-by-Light/Voice",x:"Das Lagerverwaltungssystem erzeugt die Pickliste und berechnet den kürzesten Weg. Der Barcode-Scan bestätigt den richtigen Artikel, Lichtsignal oder Sprachansage führen zum Fach, die Entnahme wird automatisch gebucht."},
+ {s:"Verpacken & versenden",sys:"Versandsoftware, EDI",x:"Versandetikett und Sendungsnummer entstehen automatisch und gehen per Schnittstelle direkt an den Paketdienst. Die Sendungsdaten stehen sofort in der Sendungsverfolgung."},
+ {s:"Rechnung stellen",sys:"ERP-Faktura",x:"Die Rechnung entsteht per Knopfdruck aus Auftrag und Lieferschein. Es kann nur berechnet werden, was auch geliefert wurde."},
+ {s:"Sendung verfolgen",sys:"Tracking-Portal",x:"Kunde und Kundenservice sehen online denselben Sendungsstatus. Rückfragen lassen sich ohne Rückruf beim Fahrer beantworten."}];
+const itPick=$("#itpick");
+ITS.forEach((it,i)=>{
+  const b=document.createElement("button"); b.className="chip"; b.textContent=it.s;
+  b.setAttribute("aria-pressed",i===0?"true":"false");
+  b.addEventListener("click",()=>{
+    $$("#itpick .chip").forEach(x=>x.setAttribute("aria-pressed","false"));
+    b.setAttribute("aria-pressed","true"); showIt(i);
+  });
+  itPick.appendChild(b);
+});
+function showIt(i){
+  const it=ITS[i];
+  $("#itdetail").innerHTML='<h5>'+esc(it.s)+' <span style="font-size:13px;color:var(--teal);background:var(--teal-soft);border-radius:4px;padding:2px 8px;margin-left:6px">'+esc(it.sys)+'</span></h5><p>'+esc(it.x)+'</p>';
+}
+showIt(0);
+
+/* ---------------- Quiz ---------------- */
+const QUIZ=[
+ {f:"Welche Frage beantwortet die Aufbauorganisation?",
+  o:["Wann läuft was in welcher Reihenfolge ab?","Wer ist wofür zuständig?","Wie viel kostet ein Prozessschritt?","Welche IT-Systeme werden eingesetzt?"],r:1,
+  e:"Die Aufbauorganisation ist die statische Struktur und klärt Zuständigkeiten. Die Reihenfolge klärt die Ablauforganisation."},
+ {f:"Was ist eine Instanz?",
+  o:["Die kleinste Einheit der Aufbauorganisation","Eine Abteilung ohne Leitung","Eine Stelle mit Weisungsbefugnis","Ein Symbol der EPK"],r:2,
+  e:"Instanzen sind Stellen mit Leitungsfunktion, zum Beispiel Abteilungsleiterinnen. Die kleinste Einheit ist dagegen die Stelle."},
+ {f:"Woran erkennt man im Organigramm ein Einliniensystem?",
+  o:["Jede Stelle hat genau einen Vorgesetzten","Es gibt gestrichelte Beratungslinien","Alle Abteilungen stehen nebeneinander","Es gibt mehr als vier Hierarchieebenen"],r:0,
+  e:"Genau ein Vorgesetzter je Stelle ist das Kennzeichen. Mehrere Vorgesetzte bedeuten Mehrliniensystem, beratende Stäbe das Stab-Linien-System."},
+ {f:"In welcher Reihenfolge durchläuft ein Kundenauftrag typischerweise die Abteilungen?",
+  o:["Lager → Vertrieb → Buchhaltung → Versand","Vertrieb → Lager → Versand → Buchhaltung","Buchhaltung → Vertrieb → Lager → Versand","Versand → Lager → Vertrieb → Buchhaltung"],r:1,
+  e:"Der Vertrieb nimmt an und prüft, das Lager kommissioniert, der Versand verpackt und verschickt, die Buchhaltung stellt die Rechnung."},
+ {f:"Welche Formulierung gehört in ein Ereignis-Sechseck?",
+  o:["Ware kommissionieren","Rechnung schreiben","Ware ist bereitgestellt","Lager"],r:2,
+  e:"Ereignisse sind passiv formulierte Zustände. Aktive Formulierungen sind Funktionen, ein Abteilungsname ist eine Organisationseinheit."},
+ {f:"Welche Regel gilt für jede EPK?",
+  o:["Sie beginnt mit einer Funktion und endet mit einem Ereignis","Ereignis und Funktion wechseln sich ab, Anfang und Ende sind Ereignisse","Jede Funktion braucht mindestens zwei Konnektoren","Organisationseinheiten stehen immer am Ende"],r:1,
+  e:"Der Wechsel von Ereignis und Funktion ist die wichtigste Regel; Start und Ende sind stets Ereignisse."},
+ {f:"Der Prozess soll entweder mit vollständiger Lieferung oder mit Teillieferung weitergehen. Welcher Konnektor passt?",
+  o:["UND","ODER","XOR","Kein Konnektor nötig"],r:2,
+  e:"XOR bedeutet entweder-oder: Genau ein Weg wird gegangen, niemals beide gleichzeitig."},
+ {f:"Was zeigt ein Bahnwechsel im Swimlane-Diagramm an?",
+  o:["Einen Fehler im Prozess","Eine Schnittstelle zwischen zwei Abteilungen","Das Ende des Prozesses","Eine parallele Bearbeitung"],r:1,
+  e:"Springt ein Pfeil in eine andere Bahn, wechselt die Zuständigkeit. Solche Übergabepunkte sind besonders fehleranfällig."},
+ {f:"Was beschreibt das Verfahren „Ware zum Mann“?",
+  o:["Die Person läuft mit der Pickliste zum Regal","Automatische Systeme bringen die Ware zum Arbeitsplatz","Der Kunde holt die Ware selbst ab","Die Ware wird direkt vom Lieferanten versendet"],r:1,
+  e:"Bei „Ware zum Mann“ transportieren Regalbediengeräte oder Shuttles die Ware zur Person – das spart Laufwege, kostet aber Investitionen."},
+ {f:"Warum macht ein ERP-System aus Abteilungen ein vernetztes System?",
+  o:["Weil jede Abteilung eine eigene Datenbank bekommt","Weil Daten nur einmal erfasst werden und allen zur Verfügung stehen","Weil es die Hierarchie im Organigramm abschafft","Weil es Papierdokumente automatisch einscannt"],r:1,
+  e:"Auftrag, Bestand, Versand und Rechnung arbeiten auf denselben Daten. Deshalb wird nur einmal erfasst – schneller, fehlerärmer und transparenter."}
+];
+const quizList=$("#quizList"); let answered=0, right=0;
+function buildQuiz(){
+  answered=0; right=0; $("#scoreDone").textContent="0"; $("#scoreRight").textContent="0";
+  quizList.innerHTML=QUIZ.map((q,i)=>
+    '<div class="q" data-i="'+i+'"><p class="frage">'+(i+1)+'. '+esc(q.f)+'</p>'+
+    q.o.map((o,j)=>'<button class="opt" data-j="'+j+'">'+esc(o)+'</button>').join("")+
+    '<p class="expl">'+esc(q.e)+'</p></div>').join("");
+}
+quizList.addEventListener("click",e=>{
+  const btn=e.target.closest(".opt"); if(!btn) return;
+  const card=btn.closest(".q"); if(card.dataset.locked) return;
+  card.dataset.locked="1";
+  const q=QUIZ[parseInt(card.dataset.i,10)], j=parseInt(btn.dataset.j,10);
+  Array.from(card.querySelectorAll(".opt")).forEach((b,k)=>{
+    if(k===q.r) b.classList.add("right");
+    else if(k===j) b.classList.add("wrong");
+  });
+  card.querySelector(".expl").classList.add("show");
+  answered++; if(j===q.r) right++;
+  $("#scoreDone").textContent=answered; $("#scoreRight").textContent=right;
+});
+$("#quizReset").addEventListener("click",buildQuiz);
+buildQuiz();
+})();
+</script>
+</body>
+</html>
